@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
+/** @type {import('tailwindcss').Config} */
 
 const config = {
   darkMode: ['class'],
@@ -45,6 +46,10 @@ const config = {
       },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+      colors: {
+        orange: '#FC5252',
+        white: '#FFFFFF',
       },
     },
   },
