@@ -25,12 +25,12 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <div className="min-h-screen flex flex-col overflow-x-hidden">
           <Navbar />
-
-          <FoxAnimations />
-
-          <main className="flex-1">
-            {children}
-          </main>
+          <SplashScreen>
+            <FoxAnimations />
+            <main className="flex-1">
+              {children}
+            </main>
+          </SplashScreen>
           
           <Footer />
         </div>
