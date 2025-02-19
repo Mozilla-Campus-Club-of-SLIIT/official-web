@@ -1,4 +1,13 @@
+"use client";
+import { useState } from "react";
+import { executiveCommittees } from "@/data/executive-committee";
+import YearSelector from "@/components/ui/year-selector";
+import ExecutiveCommitteeUI from "@/components/ui/executive-committee";
+
 export default function About() {
+  const years = Object.keys(executiveCommittees);
+  const [selectedYear, setSelectedYear] = useState(years[0]);
+
   return (
     <div className="py-12 bg-[#faf9f6]">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -8,7 +17,7 @@ export default function About() {
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-orange-500"></div>
           </span>
         </h1>
-        
+
         {/* Vision and Mission Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
           {/* Vision */}
@@ -18,8 +27,9 @@ export default function About() {
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-orange-500"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-orange-500"></div>
               <p className="text-gray-600 text-center leading-relaxed">
-                To create a vibrant community of tech enthusiasts at SLIIT who are passionate about open source technologies
-                and committed to making the web a better place for everyone.
+                To create a vibrant community of tech enthusiasts at SLIIT who
+                are passionate about open source technologies and committed to
+                making the web a better place for everyone.
               </p>
             </div>
           </div>
@@ -31,8 +41,9 @@ export default function About() {
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-orange-500"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-orange-500"></div>
               <p className="text-gray-600 text-center leading-relaxed">
-                Our mission is to empower students with the knowledge and skills needed to contribute to open source projects,
-                foster innovation, and build a strong tech community within SLIIT.
+                Our mission is to empower students with the knowledge and skills
+                needed to contribute to open source projects, foster innovation,
+                and build a strong tech community within SLIIT.
               </p>
             </div>
           </div>
@@ -53,7 +64,8 @@ export default function About() {
                 <h3 className="font-semibold mb-4">Education</h3>
                 <div className="w-12 h-1 bg-orange-500 mx-auto mb-4"></div>
                 <p className="text-gray-600">
-                  Regular workshops, seminars, and hands-on sessions on various technologies
+                  Regular workshops, seminars, and hands-on sessions on various
+                  technologies
                 </p>
               </div>
             </div>
@@ -63,7 +75,8 @@ export default function About() {
                 <h3 className="font-semibold mb-4">Community Building</h3>
                 <div className="w-12 h-1 bg-orange-500 mx-auto mb-4"></div>
                 <p className="text-gray-600">
-                  Creating opportunities for networking and collaboration within our tech community
+                  Creating opportunities for networking and collaboration within
+                  our tech community
                 </p>
               </div>
             </div>
@@ -94,20 +107,29 @@ export default function About() {
                 <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-orange-500"></div>
                 <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-orange-500"></div>
                 <p className="text-gray-600 mb-4 text-center leading-relaxed">
-                  The Mozilla Campus Club at SLIIT was established with the vision of bringing together passionate
-                  students interested in web technologies and open source development. Since our inception, we have
-                  grown into a thriving community of learners, developers, and innovators. The Mozilla Campus Club is 
-                  thriving with the collaboration of two other clubs: <b>The SLIIT FOSS Community & SLIIT Women In FOSS.</b>
+                  The Mozilla Campus Club at SLIIT was established with the
+                  vision of bringing together passionate students interested in
+                  web technologies and open source development. Since our
+                  inception, we have grown into a thriving community of
+                  learners, developers, and innovators. The Mozilla Campus Club
+                  is thriving with the collaboration of two other clubs:{" "}
+                  <b>The SLIIT FOSS Community & SLIIT Women In FOSS.</b>
                 </p>
                 <p className="text-gray-600 mb-4 text-center leading-relaxed">
-                  Our journey began with a small group of enthusiastic students who wanted to make a difference
-                  in the tech community. Today, we have evolved into one of the most active tech clubs at SLIIT,
-                  organizing numerous events, workshops, and hackathons throughout the academic year.
+                  Our journey began with a small group of enthusiastic students
+                  who wanted to make a difference in the tech community. Today,
+                  we have evolved into one of the most active tech clubs at
+                  SLIIT, organizing numerous events, workshops, and hackathons
+                  throughout the academic year.
                 </p>
                 <p className="text-gray-600 text-center leading-relaxed">
-                  Under the current leadership of our <b>Club President - Sayuru Bopitiya and his wonderful team</b>, we continue to grow and adapt, 
-                  always staying true to our core values of openness, innovation, and community building. Our members have gone 
-                  on to make significant contributions to various open source projects and have established successful careers in the tech industry.
+                  Under the current leadership of our{" "}
+                  <b>Club President - Sayuru Bopitiya and his wonderful team</b>
+                  , we continue to grow and adapt, always staying true to our
+                  core values of openness, innovation, and community building.
+                  Our members have gone on to make significant contributions to
+                  various open source projects and have established successful
+                  careers in the tech industry.
                 </p>
               </div>
             </div>
@@ -122,78 +144,13 @@ export default function About() {
               <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-orange-500"></div>
             </span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Row 1: President */}
-            <div className="md:col-span-3 flex justify-center">
-              <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center w-64">
-                <img
-                  className="w-24 h-24 rounded-full mx-auto mb-4"
-                  src="/assets/Sayuru.jpeg"
-                  alt="President"
-                />
-                <h3 className="font-bold text-lg">Sayuru Bopitiya</h3>
-                <p className="text-gray-600">President</p>
-              </div>
-            </div>
-            {/* Row 2: Vice President, Secretary, Treasurer */}
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Nethmi.jpeg"
-                alt="Vice President"
-              />
-              <h3 className="font-bold text-lg">Nethmi Nikeshala</h3>
-              <p className="text-gray-600">Vice President</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Gethmi.jpeg"
-                alt="Secretary"
-              />
-              <h3 className="font-bold text-lg">Gethmi Rathnayaka</h3>
-              <p className="text-gray-600">Secretary</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Jayadinu.jpeg"
-                alt="Treasurer"
-              />
-              <h3 className="font-bold text-lg">Jayadinu Dias</h3>
-              <p className="text-gray-600">Treasurer</p>
-            </div>
-            {/* Row 3: Dev Lead, Editor, Event Coordinator */}
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Danuja.jpeg"
-                alt="Dev Lead"
-              />
-              <h3 className="font-bold text-lg">Danuja Jayasuriya</h3>
-              <p className="text-gray-600">Dev Lead</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Ravidu.jpeg"
-                alt="Editor"
-              />
-              <h3 className="font-bold text-lg">Ravindu Dilusha</h3>
-              <p className="text-gray-600">Editor</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/assets/Nowen.jpeg"
-                alt="Event Coordinator"
-              />
-              <h3 className="font-bold text-lg">Nowen Kottage</h3>
-              <p className="text-gray-600">Event Coordinator</p>
-            </div>
-          </div>
+          <YearSelector
+            years={years}
+            selectedYear={selectedYear}
+            onChange={setSelectedYear}
+          />
+          <ExecutiveCommitteeUI members={executiveCommittees[selectedYear]} />
         </section>
-
       </div>
     </div>
   );
