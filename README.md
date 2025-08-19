@@ -19,16 +19,18 @@ $ git clone https://github.com/YOUR-USERNAME/official-web.git
 $ cd official-web
 ```
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies & Set Up Husky Hooks
 
 Ensure you have **Node.js (LTS version)** and **npm/yarn** installed. Then, run:
 
 ```sh
 # Using npm
 $ npm install
+$ npm run prepare   # Sets up Husky Git hooks
 
 # OR using yarn
 $ yarn install
+$ yarn prepare      # Sets up Husky Git hooks
 ```
 
 ### 3️⃣ Run the Development Server
@@ -66,6 +68,7 @@ $ git checkout -b feature/your-feature-name
 Make your changes and test them locally. Follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
 Example:
+
 ```sh
 $ git add .
 $ git commit -m "feat: added a new about section"
@@ -98,6 +101,7 @@ $ npm run format
 ## 🔥 Getting Help
 
 If you have any questions:
+
 - Check the existing issues or discussions.
 - Reach out to the **Mozilla Campus Club of SLIIT** team.
 - Open a new issue if needed.
@@ -107,4 +111,3 @@ If you have any questions:
 ## 🎉 Happy Coding!
 
 Thank you for contributing to the **Mozilla Campus Club of SLIIT** website! 🙌
-
