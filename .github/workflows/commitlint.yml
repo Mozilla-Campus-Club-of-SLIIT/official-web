@@ -1,5 +1,6 @@
 name: Commitlint
 
+# Run on any push or pull request
 on:
   push:
   pull_request:
@@ -12,4 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0  
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install commitlint
+        run: npm install --save-dev @commitlint/{config-conventional,cli}
+
+      - name: Run commitlint
+        run: |
+          npx commitlint --from=${{ github.event.pull_request.base.sha || github.event.before }} --to=${{ github.sha }}
