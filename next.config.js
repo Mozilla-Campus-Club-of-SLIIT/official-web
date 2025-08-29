@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Removed `output: 'export'` to allow dynamic Route Handlers (API endpoints) and server runtime.
   eslint: {
     ignoreDuringBuilds: true,
   },
