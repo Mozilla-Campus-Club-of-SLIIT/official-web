@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 
-export const runtime = "nodejs"; // ensure Node environment
-export const dynamic = "force-dynamic"; // override any inherited "error"
-export const revalidate = 0; // no caching of this handler
+export const runtime = "nodejs"; 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
   try {
@@ -54,7 +54,6 @@ export async function POST(req: NextRequest) {
     const sheets = google.sheets({ version: "v4", auth: jwt });
     const timestamp = new Date().toISOString();
 
-    // Prepare row in same order as sheet columns
     const row = [
       timestamp,
       email,
@@ -69,10 +68,9 @@ export async function POST(req: NextRequest) {
       reason,
       otherClubs,
       preferredTeam,
-      "Pending", // Application Status
+      "Pending",
     ];
 
-    // Use your sheet tab name exactly (replace "Applications" if needed)
     await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
       range: "Applications", 
