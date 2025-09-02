@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install && shx chmod +x .husky/* && shx chmod +x .husky/_/*"
+    "prepare": "husky install && shx chmod +x .husky/* && shx chmod +x .husky/_/*",
+    "format": "prettier --write \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\""
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -75,6 +77,11 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "lint-staged": "^16.1.6",
+    "prettier": "^3.6.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css,md}": "npm run format"
   }
 }
