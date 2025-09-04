@@ -82,6 +82,6 @@
     "prettier": "^3.6.2"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,json,css,md}": "npm run format"
+    "*.{js,ts,jsx,tsx,json,css,md}": "npm run format:check"
   }
 }
