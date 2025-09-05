@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface FieldErrors {
   fullName?: string;
@@ -58,6 +59,8 @@ export default function JoinUsPage() {
       nextErrors.email = "Invalid email";
 
     if (!studentId.trim()) nextErrors.studentId = "Student ID is required";
+    else if (!/^(IT|EN|BS|HS)\d{8}$/i.test(studentId.trim()))
+      nextErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits";
     if (!academicYear) nextErrors.academicYear = "Select academic year";
     if (!semester) nextErrors.semester = "Select semester";
     if (!specialization) nextErrors.specialization = "Select specialization";
@@ -72,17 +75,20 @@ export default function JoinUsPage() {
       try { new URL(v); return true; } catch { return false; }
     };
     if (!linkedin.trim()) nextErrors.linkedin = "LinkedIn URL required";
-    else if (!urlOk(linkedin.trim())) nextErrors.linkedin = "Invalid URL";
+    else if (!/^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub)\/[A-Za-z0-9_-]+\/?$/i.test(linkedin.trim()) && !/^(linkedin\.com\/(in|pub)\/[A-Za-z0-9_-]+\/?$)/i.test(linkedin.trim()))
+      nextErrors.linkedin = "Enter a valid LinkedIn profile URL";
 
     if (!github.trim()) nextErrors.github = "GitHub URL required";
-    else if (!urlOk(github.trim())) nextErrors.github = "Invalid URL";
+    else if (!/^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/?$/i.test(github.trim()) && !/^(github\.com\/[A-Za-z0-9_.-]+\/?$)/i.test(github.trim()))
+      nextErrors.github = "Enter a valid GitHub profile URL";
 
     if (!reason.trim()) nextErrors.reason = "Reason required";
     else if (reason.trim().length < 10)
       nextErrors.reason = "Min 10 characters";
 
-    if (preferredTeams.length === 0)
+    if (!preferredTeams || preferredTeams.length === 0) {
       nextErrors.preferredTeam = "Select at least one team";
+    }
 
     return nextErrors;
   }, [fullName, email, studentId, academicYear, semester, specialization, whatsappCountryDigits, whatsappNumber, linkedin, github, reason, preferredTeams]);
@@ -94,19 +100,37 @@ export default function JoinUsPage() {
   };
 
   const onCheckboxChange = (team: string) => {
-    setPreferredTeams((prev) =>
-      prev.includes(team) ? prev.filter((t) => t !== team) : [...prev, team]
-    );
+    setPreferredTeams((prev) => {
+      const updated = prev.includes(team) ? prev.filter((t) => t !== team) : [...prev, team];
+      // Remove error if at least one selected
+      if (updated.length > 0) {
+        setErrors((errs) => ({ ...errs, preferredTeam: undefined }));
+      }
+      return updated;
+    });
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setFieldTouched("fullName");
-    setFieldTouched("email");
+    // Touch all fields to show inline errors
+    [
+      "fullName",
+      "email",
+      "studentId",
+      "academicYear",
+      "semester",
+      "specialization",
+      "whatsappCountry",
+      "whatsappNumber",
+      "linkedin",
+      "github",
+      "reason",
+      "preferredTeam"
+    ].forEach(setFieldTouched);
     const validation = runValidationAndSet();
     if (Object.keys(validation).length > 0) {
       setIsError(true);
-      setMessage("Please fix validation errors.");
+      setMessage("Please fill all required fields marked with *");
       return;
     }
 
@@ -162,7 +186,21 @@ export default function JoinUsPage() {
   setSubmitted(true);
     } catch (err: any) {
       setIsError(true);
-      setMessage("Submission failed: " + err.message);
+      // Try to parse backend error and set field errors
+      let backendMsg = err.message || "";
+      const newFieldErrors: Partial<FieldErrors> = {};
+      if (backendMsg.includes("Invalid LinkedIn URL")) newFieldErrors.linkedin = "Enter a valid LinkedIn profile URL";
+      if (backendMsg.includes("Invalid GitHub URL")) newFieldErrors.github = "Enter a valid GitHub profile URL";
+      if (backendMsg.includes("Invalid student ID")) newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits";
+      if (backendMsg.includes("Invalid email")) newFieldErrors.email = "Invalid email";
+      if (backendMsg.includes("Full name required")) newFieldErrors.fullName = "Full name is required";
+      if (backendMsg.includes("Academic year required")) newFieldErrors.academicYear = "Select academic year";
+      if (backendMsg.includes("Semester required")) newFieldErrors.semester = "Select semester";
+      if (backendMsg.includes("Specialization required")) newFieldErrors.specialization = "Select specialization";
+      if (backendMsg.includes("Reason too short")) newFieldErrors.reason = "Min 10 characters";
+      if (backendMsg.includes("WhatsApp required")) newFieldErrors.whatsappNumber = "WhatsApp required";
+      setErrors((prev) => ({ ...prev, ...newFieldErrors }));
+      setMessage("Submission failed: " + backendMsg);
     } finally {
       setLoading(false);
     }
@@ -180,31 +218,35 @@ export default function JoinUsPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="w-full max-w-md rounded-xl shadow-lg p-8" style={{ background: "#FDBB9A" }}>
-          <h1 className="text-xl font-semibold text-center mb-4">Registration Form - Mozilla Campus Club of SLIIT</h1>
-          <p className="text-sm leading-relaxed mb-4 text-center">
-            Thank you for your interest in joining Mozilla Campus Club of SLIIT. Please use the following link to join our WhatsApp group.
-          </p>
-          <p className="text-center mb-6">
-            <a
-              href="https://chat.whatsapp.com/ClX4r9OY6R61ss00tRkNNS"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline font-medium break-all hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-            >
-              Join WhatsApp Group
-            </a>
-          </p>
-          <div className="flex justify-center">
-            <Link
-              href="/"
-              className="px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#EA7B2C] hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors"
-            >
-              Back to Home
-            </Link>
-          </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center px-4 py-8">
+        <Card className="w-full max-w-md shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-center text-orange-600">Registration Form - Mozilla Campus Club of SLIIT</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm leading-relaxed mb-4 text-center">
+              Thank you for your interest in joining Mozilla Campus Club of SLIIT. Please use the following link to join our WhatsApp group.
+            </p>
+            <p className="text-center mb-6">
+              <a
+                href="https://chat.whatsapp.com/ClX4r9OY6R61ss00tRkNNS"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-medium break-all hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              >
+                Join WhatsApp Group
+              </a>
+            </p>
+            <div className="flex justify-center">
+              <Link
+                href="/"
+                className="px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#EA7B2C] hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors"
+              >
+                Back to Home
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -263,7 +305,14 @@ export default function JoinUsPage() {
           <input
             name="studentId"
             value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            onChange={(e) => {
+              let v = e.target.value.toUpperCase();
+              if (v.length > 10) v = v.slice(0, 10);
+              if (v.length <= 2) v = v.replace(/[^A-Z]/g, "");
+              else v = v.slice(0,2).replace(/[^A-Z]/g, "") + v.slice(2).replace(/[^0-9]/g, "");
+              setStudentId(v);
+            }}
+            maxLength={10}
             onBlur={() => handleBlur("studentId")}
             className={`${baseInput} ${errors.studentId && touched.studentId ? errorInput : ""}`}
             placeholder="e.g. IT2023XXXX"

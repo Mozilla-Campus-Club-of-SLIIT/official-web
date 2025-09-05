@@ -24,10 +24,22 @@ export async function POST(req: NextRequest) {
       preferredTeam,
     } = body;
 
-    // Validate required fields
-    if (!email || !fullName) {
+    // Basic validation (mirror client)
+    const errors: string[] = [];
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("Invalid email");
+    if (!fullName) errors.push("Full name required");
+    if (!studentId || !/^(IT|EN|BS|HS)\d{8}$/i.test(studentId)) errors.push("Invalid student ID");
+    if (!academicYear) errors.push("Academic year required");
+    if (!semester) errors.push("Semester required");
+    if (!specialization) errors.push("Specialization required");
+  if (!linkedin || !/^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub)\/[A-Za-z0-9_-]+\/?$/i.test(linkedin)) errors.push("Invalid LinkedIn URL");
+  if (!github || !/^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/?$/i.test(github)) errors.push("Invalid GitHub URL");
+    if (!reason || reason.trim().length < 10) errors.push("Reason too short");
+    if (!whatsapp) errors.push("WhatsApp required");
+
+    if (errors.length) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields" },
+        { success: false, error: errors.join(", ") },
         { status: 400 }
       );
     }
