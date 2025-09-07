@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Youtube, Mic, LucideIcon } from "lucide-react"
 
 type Event = {
-  title: string,
-  image: string,
-  date: string,
-  time: string,
-  location :string,
-  url: string,
-  urlLabel: string,
-  urlIcon: LucideIcon,
+  title: string
+  image: string
+  date: string
+  time: string
+  location: string
+  url: string
+  urlLabel: string
+  urlIcon: LucideIcon
   description: string
 }
 
@@ -22,21 +22,24 @@ const events: Partial<Event>[] = [
     url: "https://youtube.com/playlist?list=PLkWgPcG-GFhB3sSAf7dzUs_F3dQ19ihXR&si=aGi9UGwc3KmNcIHT",
     urlLabel: "Catch the podcast!",
     urlIcon: Mic,
-    description: "Code N' Coffee, is a series of byte-sized tech content aimed at Computer Science students presented to you by The Mozilla Campus Club of SLIIT. Don't miss out on the Tech insights and the latest of the tech and privacy world.",
+    description:
+      "Code N' Coffee, is a series of byte-sized tech content aimed at Computer Science students presented to you by The Mozilla Campus Club of SLIIT. Don't miss out on the Tech insights and the latest of the tech and privacy world.",
     location: "Youtube - @sliitmozilla",
     time: "Every Week",
   },
   {
     title: "Open Source Contribution Day",
     date: "TBD",
-    description: "Join us for a day of contributing to open source projects to celebrate the wonder and beauty of Open-Source Software on Open Source Contribution Day!",
+    description:
+      "Join us for a day of contributing to open source projects to celebrate the wonder and beauty of Open-Source Software on Open Source Contribution Day!",
     location: "TBD",
     time: "TBD",
   },
   {
     title: "Hola Mozilla!",
     date: "April 2025",
-    description: "Hola Mozilla is the Orientation program for the Mozilla Campus Club of SLIIT. This event is specially focused on the new members of the club to get to know about the club and its activities.",
+    description:
+      "Hola Mozilla is the Orientation program for the Mozilla Campus Club of SLIIT. This event is specially focused on the new members of the club to get to know about the club and its activities.",
     location: "TBD",
     time: "TBD",
   },
@@ -83,24 +86,20 @@ const pastEvents: Partial<Event>[] = [
 ]
 
 export default function Events() {
-
   const getEventLinkText = (url?: string, label?: string, UrlIcon?: LucideIcon) => {
     if (!url) return null
-    const icon = UrlIcon 
-      ? <UrlIcon className="mr-1 w-4 h-4" />
-      : url.includes("youtube.com")
-        ? <Youtube className="mr-1 w-4 h-4" /> 
-        : <ExternalLink className="mr-1 w-4 h-4" />
+    const icon = UrlIcon ? (
+      <UrlIcon className="mr-1 w-4 h-4" />
+    ) : url.includes("youtube.com") ? (
+      <Youtube className="mr-1 w-4 h-4" />
+    ) : (
+      <ExternalLink className="mr-1 w-4 h-4" />
+    )
 
     const labelText = label || (url.includes("youtube.com") ? "Watch the session!" : "Check out!")
 
     return (
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center mt-3"
-      >
+      <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center mt-3">
         {icon}
         {labelText}
       </a>
@@ -137,10 +136,7 @@ export default function Events() {
           <h2 className="text-3xl font-bold text-center mb-12">Past Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {pastEvents.map((pastEvent, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-sm overflow-hidden"
-              >
+              <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
                 {/* Event Image */}
                 <img
                   src={pastEvent.image}
@@ -168,9 +164,7 @@ export default function Events() {
                  after:w-0 after:transition-[width] after:duration-300 hover:after:w-full"
           >
             Check out our past live sessions on YouTube!
-            <span
-              className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1"
-            >
+            <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
           </a>

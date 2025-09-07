@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 import { Button } from "@/components/ui/button"
 
 const JoinButton = () => {
@@ -11,13 +11,13 @@ const JoinButton = () => {
         window.open(
           "https://bit.ly/sliitmozilla-member-registrations",
           "_blank",
-          "noopener,noreferrer"
+          "noopener,noreferrer",
         )
       }
     >
       Join Us!
     </Button>
-  );
-};
+  )
+}
 
-export default JoinButton;
+export default JoinButton

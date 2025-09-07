@@ -1,4 +1,4 @@
-import JoinButton from "@/components/ui/JoinButton";
+import JoinButton from "@/components/ui/JoinButton"
 import { MovingBanner } from "@/components/ui/moving-banner"
 import { Code2, Users, Rocket, Brain } from "lucide-react"
 
@@ -11,13 +11,14 @@ export default function Home() {
           <p className="text-xl opacity-90">Home of The Mozilla Campus Club of SLIIT</p>
         </div>
       </section>
-      
+
       <MovingBanner text="Join Mozilla Campus Club SLIIT - Where Innovation Meets Open Source 🚀" />
-      
+
       <section className="py-16 container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Areas of Focus</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="p-6 border rounded-lg text-center
+          <div
+            className="p-6 border rounded-lg text-center
                           transition-all duration-300
                           hover:shadow-lg hover:-translate-y-1
                           hover:border-orange-600
@@ -28,7 +29,8 @@ export default function Home() {
             <p className="text-gray-600">Explore modern web development and open standards</p>
           </div>
 
-          <div className="p-6 border rounded-lg text-center
+          <div
+            className="p-6 border rounded-lg text-center
                           transition-all duration-300
                           hover:shadow-lg hover:-translate-y-1
                           hover:border-orange-600
@@ -39,7 +41,8 @@ export default function Home() {
             <p className="text-gray-600">Connect with like-minded tech enthusiasts</p>
           </div>
 
-          <div className="p-6 border rounded-lg text-center
+          <div
+            className="p-6 border rounded-lg text-center
                           transition-all duration-300
                           hover:shadow-lg hover:-translate-y-1
                           hover:border-orange-600
@@ -50,7 +53,8 @@ export default function Home() {
             <p className="text-gray-600">Create impactful solutions for real-world problems</p>
           </div>
 
-          <div className="p-6 border rounded-lg text-center
+          <div
+            className="p-6 border rounded-lg text-center
                           transition-all duration-300
                           hover:shadow-lg hover:-translate-y-1
                           hover:border-orange-600
@@ -123,7 +127,8 @@ export default function Home() {
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
               <h3 className="text-orange-600 font-bold mb-2">Community</h3>
               <p className="text-gray-600">
-                Engage with a supportive network of peers, mentors, and tech enthusiasts eager to share knowledge.
+                Engage with a supportive network of peers, mentors, and tech enthusiasts eager to
+                share knowledge.
               </p>
             </div>
 
@@ -138,7 +143,8 @@ export default function Home() {
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
               <h3 className="text-orange-600 font-bold mb-2">Leadership Growth</h3>
               <p className="text-gray-600">
-                Hone your organizational and communication skills by leading events, hackathons, and team projects.
+                Hone your organizational and communication skills by leading events, hackathons, and
+                team projects.
               </p>
             </div>
 
@@ -153,7 +159,8 @@ export default function Home() {
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
               <h3 className="text-orange-600 font-bold mb-2">Mentorship & Guidance</h3>
               <p className="text-gray-600">
-                Learn from experienced developers and alumni who can help you navigate your tech career.
+                Learn from experienced developers and alumni who can help you navigate your tech
+                career.
               </p>
             </div>
           </div>
@@ -174,7 +181,8 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Become a member</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Be part of a community that's passionate about technology, innovation, and making a difference in internet security.
+            Be part of a community that's passionate about technology, innovation, and making a
+            difference in internet security.
           </p>
           <JoinButton />
         </div>

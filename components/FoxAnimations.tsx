@@ -87,11 +87,7 @@ export function FoxAnimations() {
         }}
         className={containerClass}
       >
-        <img
-          src={src}
-          alt="Animated Fox"
-          className={flip ? "fox-flip" : ""}
-        />
+        <img src={src} alt="Animated Fox" className={flip ? "fox-flip" : ""} />
       </div>
 
       <style jsx global>{`

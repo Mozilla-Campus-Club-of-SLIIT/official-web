@@ -38,11 +38,7 @@ export function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* --- Logo --- */}
         <Link href="/" className="flex items-center space-x-2">
-          <img
-            src="/assets/Mozilla-logo.png"
-            alt="Mozilla Logo"
-            className="h-6 w-auto"
-          />
+          <img src="/assets/Mozilla-logo.png" alt="Mozilla Logo" className="h-6 w-auto" />
         </Link>
 
         {/* --- Desktop Nav Links --- */}
@@ -76,10 +72,7 @@ export function Navbar() {
         </div>
 
         {/* --- Hamburger / Close Btn for Mobile --- */}
-        <button
-          onClick={toggleMenu}
-          className="block md:hidden p-2 text-gray-700 relative group"
-        >
+        <button onClick={toggleMenu} className="block md:hidden p-2 text-gray-700 relative group">
           {isMenuOpen ? (
             // Rotates on hover when open
             <X className="w-6 h-6 transition-transform duration-300 group-hover:rotate-180" />
@@ -103,32 +96,16 @@ export function Navbar() {
         `}
       >
         <div className="flex flex-col space-y-4 text-left">
-          <NavLinkMobile
-            href="/about"
-            active={isActive("/about")}
-            closeMenu={toggleMenu}
-          >
+          <NavLinkMobile href="/about" active={isActive("/about")} closeMenu={toggleMenu}>
             About
           </NavLinkMobile>
-          <NavLinkMobile
-            href="/events"
-            active={isActive("/events")}
-            closeMenu={toggleMenu}
-          >
+          <NavLinkMobile href="/events" active={isActive("/events")} closeMenu={toggleMenu}>
             Events
           </NavLinkMobile>
-          <NavLinkMobile
-            href="/blog"
-            active={isActive("/blog")}
-            closeMenu={toggleMenu}
-          >
+          <NavLinkMobile href="/blog" active={isActive("/blog")} closeMenu={toggleMenu}>
             Blog
           </NavLinkMobile>
-          <NavLinkMobile
-            href="/contact"
-            active={isActive("/contact")}
-            closeMenu={toggleMenu}
-          >
+          <NavLinkMobile href="/contact" active={isActive("/contact")} closeMenu={toggleMenu}>
             Contact Us
           </NavLinkMobile>
 

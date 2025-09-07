@@ -16,11 +16,7 @@ export const metadata: Metadata = {
   description: "Official website of Mozilla Campus Club at SLIIT",
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
@@ -28,11 +24,9 @@ export default function RootLayout({
           <Navbar />
           <SplashScreen>
             <FoxAnimations />
-            <main className="flex-1">
-              {children}
-            </main>
+            <main className="flex-1">{children}</main>
           </SplashScreen>
-          
+
           <Footer />
         </div>
       </body>
