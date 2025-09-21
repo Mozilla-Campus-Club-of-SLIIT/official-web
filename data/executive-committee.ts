@@ -1,11 +1,11 @@
 export interface ExecutiveCommitteeMember {
-  name: string;
-  role: string;
-  image: string;
+  name: string
+  role: string
+  image: string
 }
 
 export interface ExecutiveCommittee {
-  [year: string]: ExecutiveCommitteeMember[];
+  [year: string]: ExecutiveCommitteeMember[]
 }
 
 export const executiveCommittees: ExecutiveCommittee = {
@@ -49,7 +49,7 @@ export const executiveCommittees: ExecutiveCommittee = {
       name: "Dasun Wickramasooriya",
       role: "Project Coordinator",
       image: "/assets/Dasun.jpg",
-    }
+    },
   ],
   "2024/2025": [
     {
@@ -88,4 +88,4 @@ export const executiveCommittees: ExecutiveCommittee = {
       image: "/assets/Nowen.jpeg",
     },
   ],
-};
+}

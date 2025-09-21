@@ -58,13 +58,17 @@ export function MovingBanner({ text }: MovingBannerProps) {
     "Join Mozilla Campus Club SLIIT - Where Innovation Meets Open Source",
     "Code N' Coffee Podcast NOW LIVE on YouTube!",
     "Empowering Students Through Technology and Open Source",
-    "Be Part of Something Bigger - Join Us Today!"
+    "Be Part of Something Bigger - Join Us Today!",
   ]
   const combinedText = messages.join(" • ")
 
   // Handlers to pause/resume on hover
-  const handleMouseEnter = () => { pausedRef.current = true }
-  const handleMouseLeave = () => { pausedRef.current = false }
+  const handleMouseEnter = () => {
+    pausedRef.current = true
+  }
+  const handleMouseLeave = () => {
+    pausedRef.current = false
+  }
 
   return (
     <div
@@ -74,9 +78,7 @@ export function MovingBanner({ text }: MovingBannerProps) {
     >
       <div ref={containerRef} className="whitespace-nowrap">
         <div ref={contentRef} className="inline-block">
-          <span className="text-primary font-medium px-4">
-            {combinedText}
-          </span>
+          <span className="text-primary font-medium px-4">{combinedText}</span>
         </div>
       </div>
     </div>

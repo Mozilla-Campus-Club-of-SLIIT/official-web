@@ -1,16 +1,12 @@
-import React from "react";
+import React from "react"
 
 interface YearSelectorProps {
-  years: string[];
-  selectedYear: string;
-  onChange: (year: string) => void;
+  years: string[]
+  selectedYear: string
+  onChange: (year: string) => void
 }
 
-const YearSelector: React.FC<YearSelectorProps> = ({
-  years,
-  selectedYear,
-  onChange,
-}) => {
+const YearSelector: React.FC<YearSelectorProps> = ({ years, selectedYear, onChange }) => {
   return (
     <div className="mb-8 flex justify-center">
       <select
@@ -25,7 +21,7 @@ const YearSelector: React.FC<YearSelectorProps> = ({
         ))}
       </select>
     </div>
-  );
-};
+  )
+}
 
-export default YearSelector;
+export default YearSelector

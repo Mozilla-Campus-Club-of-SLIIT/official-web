@@ -7,15 +7,12 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <img
-              src="/assets/Mozilla-logo.png"
-              alt="Mozilla Logo"
-              className="h-8 w-auto mb-2"
-            />
+            <img src="/assets/Mozilla-logo.png" alt="Mozilla Logo" className="h-8 w-auto mb-2" />
             <h3 className="font-bold mb-4">Mozilla Campus Club of SLIIT</h3>
             <p className="text-sm text-gray-600">
               Empowering students through open source technology and innovation.
-              <br/><b>#welovetech!</b> 🦊❤️
+              <br />
+              <b>#welovetech!</b> 🦊❤️
             </p>
           </div>
 
@@ -62,20 +59,27 @@ export function Footer() {
               <Link href="https://www.instagram.com/sliitmozilla" className="hover:text-primary">
                 <Instagram className="h-5 w-5" />
               </Link>
-              <Link href="https://github.com/Mozilla-Campus-Club-of-SLIIT" className="hover:text-primary">
+              <Link
+                href="https://github.com/Mozilla-Campus-Club-of-SLIIT"
+                className="hover:text-primary"
+              >
                 <Github className="h-5 w-5" />
               </Link>
               <Link href="https://www.youtube.com/@sliitmozilla" className="hover:text-primary">
                 <Youtube className="h-5 w-5" />
               </Link>
-              <Link href="https://www.linkedin.com/company/sliitmozilla/" className="hover:text-primary">
+              <Link
+                href="https://www.linkedin.com/company/sliitmozilla/"
+                className="hover:text-primary"
+              >
                 <Linkedin className="h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} Mozilla Campus Club of SLIIT. Made with ❤️ by SLIIT Mozillians
+          © {new Date().getFullYear()} Mozilla Campus Club of SLIIT. Made with ❤️ by SLIIT
+          Mozillians
         </div>
       </div>
     </footer>

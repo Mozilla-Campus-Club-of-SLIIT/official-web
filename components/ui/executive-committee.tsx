@@ -1,17 +1,15 @@
-import React from "react";
-import { ExecutiveCommitteeMember } from "@/data/executive-committee";
-import Image from "next/image";
+import React from "react"
+import { ExecutiveCommitteeMember } from "@/data/executive-committee"
+import Image from "next/image"
 
 interface ExecutiveCommitteeProps {
-  members: ExecutiveCommitteeMember[];
+  members: ExecutiveCommitteeMember[]
 }
 
-const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({
-  members,
-}) => {
-  if (members.length === 0) return null;
+const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) => {
+  if (members.length === 0) return null
 
-  const [president, ...otherMembers] = members;
+  const [president, ...otherMembers] = members
   const secondRow = otherMembers.slice(0, 3)
   const thirdRow = otherMembers.slice(3)
 
@@ -55,7 +53,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({
       </div>
 
       {/* Third row (remaining members) */}
-      <div className="grid gap-8 justify-center grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"  >
+      <div className="grid gap-8 justify-center grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
         {thirdRow.map((member, index) => (
           <div
             key={index}
@@ -75,7 +73,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ExecutiveCommitteeUI;
+export default ExecutiveCommitteeUI
