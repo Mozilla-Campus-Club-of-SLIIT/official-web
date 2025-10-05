@@ -375,11 +375,7 @@ export default function JoinUsPage() {
               } else {
                 // Ensure first two characters are "IT", then only digits
                 const prefix = v.slice(0, 2)
-                if (prefix === "IT") {
-                  v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
-                } else {
-                  v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
-                }
+                v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
               }
               setStudentId(v)
             }}
