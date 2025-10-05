@@ -367,14 +367,10 @@ export default function JoinUsPage() {
             value={studentId}
             onChange={(e) => {
               let v = e.target.value.toUpperCase()
-              if (v.length > 10) v = v.slice(0, 10)
+              v = v.slice(0, 10)
               if (v.length <= 2) {
-                // Only allow "IT" as the prefix
-                if (v === "I" || v === "IT") v = v
-                else v = v.replace(/[^IT]/g, "")
+                v = v.replace(/[^IT]/g, "")
               } else {
-                // Ensure first two characters are "IT", then only digits
-                const prefix = v.slice(0, 2)
                 v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
               }
               setStudentId(v)
