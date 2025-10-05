@@ -367,9 +367,12 @@ export default function JoinUsPage() {
             value={studentId}
             onChange={(e) => {
               let v = e.target.value.toUpperCase()
-              if (v.length > 10) v = v.slice(0, 10)
-              if (v.length <= 2) v = v.replace(/[^A-Z]/g, "")
-              else v = v.slice(0, 2).replace(/[^A-Z]/g, "") + v.slice(2).replace(/[^0-9]/g, "")
+              v = v.slice(0, 10)
+              if (v.length <= 2) {
+                v = v.replace(/[^IT]/g, "")
+              } else {
+                v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
+              }
               setStudentId(v)
             }}
             maxLength={10}
