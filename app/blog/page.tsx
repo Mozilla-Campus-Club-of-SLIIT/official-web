@@ -95,6 +95,18 @@ const blogPosts = [
     mediumUrl:
       "https://medium.com/@infosliitmcc/top-5-cyber-threats-every-university-student-should-know-ccd74a9773ac",
   },
+  {
+    id: "8",
+    title: "A Beginner’s Guide to Mastering APIs with Postman and HTTPie",
+    imageUrl: "/assets/blog8.png",
+    excerpt:
+      "APIs power most of the apps we use every day, from logging in with Google to checking the weather or ordering food online. But for beginners, APIs can feel like a mysterious black box.",
+    author: "Janitha Gamage",
+    date: "2025-10-01",
+    tags: ["API", "HTTPie", "Postman"],
+    mediumUrl:
+      "https://medium.com/@infosliitmcc/a-beginners-guide-to-mastering-apis-with-postman-and-httpie-6ba30d109491",
+  },
 ]
 
 export default function Blog() {
