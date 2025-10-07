@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
       token,
     } = body
 
+    // Secret key from environmental variables
     const secretKey = process.env.RECAPTCHA_SECRET_KEY!
     if (!secretKey) {
       return NextResponse.json(
@@ -33,8 +34,9 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    console.log("✅ Received reCAPTCHA token:", token)
+    //console.log("✅ Received reCAPTCHA token:", token)
 
+    // Site Verify
     const recaptchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: {
@@ -46,9 +48,11 @@ export async function POST(req: NextRequest) {
       }),
     })
 
+    // To check recaptcha is working correctly
     const verificationResult = await recaptchaResponse.json()
-    console.log("✅ reCAPTCHA verification result:", verificationResult)
+    //console.log("✅ reCAPTCHA verification result:", verificationResult)
 
+    // Recaptcha v3 accept action, When you are creating a project
     if (verificationResult.action !== "join_us_submit") {
       return NextResponse.json(
         { success: false, error: "reCAPTCHA action mismatch" },
@@ -56,6 +60,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Error handling, if the verification result score is below 0.5 or verification result isn't success, it sends "reCAPTCHA verification failed" error
     if (!verificationResult.success || verificationResult.score < 0.5) {
       return NextResponse.json(
         { success: false, error: "reCAPTCHA verification failed" },
