@@ -22,7 +22,46 @@ export async function POST(req: NextRequest) {
       reason,
       otherClubs,
       preferredTeam,
+      token,
     } = body
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY!
+    if (!secretKey) {
+      return NextResponse.json(
+        { success: false, error: "Missing reCAPTCHA secret key" },
+        { status: 500 },
+      )
+    }
+
+    console.log("✅ Received reCAPTCHA token:", token)
+
+    const recaptchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: secretKey!,
+        response: token,
+      }),
+    })
+
+    const verificationResult = await recaptchaResponse.json()
+    console.log("✅ reCAPTCHA verification result:", verificationResult)
+
+    if (verificationResult.action !== "join_us_submit") {
+      return NextResponse.json(
+        { success: false, error: "reCAPTCHA action mismatch" },
+        { status: 400 },
+      )
+    }
+
+    if (!verificationResult.success || verificationResult.score < 0.5) {
+      return NextResponse.json(
+        { success: false, error: "reCAPTCHA verification failed" },
+        { status: 400 },
+      )
+    }
 
     // Basic validation (mirror client)
     const errors: string[] = []
@@ -92,6 +131,7 @@ export async function POST(req: NextRequest) {
       requestBody: { values: [row] },
     })
 
+    console.log("✅ reCAPTCHA token verified successfully")
     return NextResponse.json({ success: true })
   } catch (err: any) {
     console.error("Join Us submission error:", err)
