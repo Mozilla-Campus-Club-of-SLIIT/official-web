@@ -52,7 +52,9 @@ export async function POST(req: NextRequest) {
     const verificationResult = await recaptchaResponse.json()
     //console.log("✅ reCAPTCHA verification result:", verificationResult)
 
-    // Recaptcha v3 accept action, When you are creating a project
+    // Recaptcha v3 accept action
+    // This action is created by when your key is requesting tokens
+
     if (verificationResult.action !== "join_us_submit") {
       return NextResponse.json(
         { success: false, error: "reCAPTCHA action mismatch" },
