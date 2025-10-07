@@ -25,6 +25,27 @@ export async function POST(req: NextRequest) {
       token,
     } = body
 
+    // To integrate reCAPTCHA into your application, you need to configure both the site key and secret key.
+    // 1. **Site Key**: This key is used on the **Frontend** to interact with reCAPTCHA and display the widget.
+    // 2. **Secret Key**: This key is used on the **Backend** to verify the reCAPTCHA token sent from the frontend.
+    //
+    // Steps to set up reCAPTCHA:
+    // 1. Visit the [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin/create) to create a new reCAPTCHA project.
+    // 2. During the setup process, you'll need to specify your **domain** (e.g., `localhost` for development or your production domain).
+    // 3. Once created, you'll get two keys:
+    //    - **Site Key** (used on the frontend for the reCAPTCHA widget).
+    //    - **Secret Key** (used on the backend for verifying the reCAPTCHA response).
+    //
+    // 4. **Add Keys to `.env.local`**:
+    //    - **SITE_KEY**: Store this in the **Frontend** for rendering the reCAPTCHA widget.
+    //    - **SECRET_KEY**: Store this in the **Backend** for token verification (used in API requests).
+    //
+    // Example configuration in `.env.local` file:
+    //   NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your-site-key-here
+    //   RECAPTCHA_SECRET_KEY=your-secret-key-here
+    //
+    // After configuration, reCAPTCHA will help protect your forms from spam and abuse by verifying the authenticity of user submissions.
+
     // Secret key from environmental variables
     const secretKey = process.env.RECAPTCHA_SECRET_KEY!
     if (!secretKey) {
