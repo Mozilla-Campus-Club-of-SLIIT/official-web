@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (err: any) {
-    console.error("Join Us submission error:", err)
+    console.error("Apply submission error:", err)
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
   }
 }

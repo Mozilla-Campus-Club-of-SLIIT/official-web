@@ -50,7 +50,6 @@ export default function JoinUsPage() {
     // Full Name: only letters & spaces, non-empty
     if (!fullName.trim()) nextErrors.fullName = "Full name is required"
     else if (!/^[A-Za-z ]+$/.test(fullName.trim())) nextErrors.fullName = "Only letters and spaces"
-
     // Email: basic pattern
     if (!email.trim()) nextErrors.email = "Email is required"
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) nextErrors.email = "Invalid email"
@@ -177,7 +176,7 @@ export default function JoinUsPage() {
     }
 
     try {
-      const res = await fetch("/api/join-us", {
+      const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -289,8 +288,8 @@ export default function JoinUsPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl py-10">
-      <h1 className="text-3xl font-bold mb-6">Join Us</h1>
+    <div className="px-4 sm:px-6 lg:px-8 mx-auto max-w-2xl py-8 md:py-10">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6">Application Form</h1>
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate>
         {/* Full Name */}
         <div>
@@ -376,7 +375,7 @@ export default function JoinUsPage() {
         </div>
 
         {/* Academic Year & Semester */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Academic Year *</label>
             <select
@@ -448,7 +447,7 @@ export default function JoinUsPage() {
         {/* WhatsApp Split with Country Code Datalist */}
         <div>
           <label className="block text-sm font-medium mb-1">WhatsApp Number *</label>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex items-stretch">
               <span className="px-2 py-2 border border-r-0 rounded-l bg-gray-50 text-sm select-none">
                 +
@@ -466,7 +465,7 @@ export default function JoinUsPage() {
                   setErrors(validate())
                 }}
                 onBlur={() => handleBlur("whatsappCountry")}
-                className={`${baseInput} w-28 rounded-l-none border-l-0 ${errors.whatsappCountry && touched.whatsappCountry ? errorInput : ""}`}
+                className={`${baseInput} w-full sm:w-28 rounded-l-none border-l-0 ${errors.whatsappCountry && touched.whatsappCountry ? errorInput : ""}`}
                 placeholder="94"
                 required
                 inputMode="numeric"
@@ -488,7 +487,7 @@ export default function JoinUsPage() {
                 setErrors(validate())
               }}
               onBlur={() => handleBlur("whatsappNumber")}
-              className={`${baseInput} flex-1 ${errors.whatsappNumber && touched.whatsappNumber ? errorInput : ""}`}
+              className={`${baseInput} w-full ${errors.whatsappNumber && touched.whatsappNumber ? errorInput : ""}`}
               placeholder="7XXXXXXXX"
               required
               inputMode="numeric"
@@ -783,7 +782,7 @@ export default function JoinUsPage() {
             className={`border rounded p-3 ${errors.preferredTeam && touched.preferredTeam ? "border-red-500" : "border-gray-300"}`}
           >
             <legend className="text-sm font-medium">Preferred Teams *</legend>
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
               {preferredTeamOptions.map((team) => {
                 const checked = preferredTeams.includes(team)
                 return (
@@ -817,7 +816,7 @@ export default function JoinUsPage() {
         <button
           type="submit"
           disabled={loading}
-          className="px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#EA7B2C] hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors disabled:opacity-50"
+          className="w-full sm:w-auto px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#EA7B2C] hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors disabled:opacity-50"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
