@@ -263,23 +263,22 @@ export default function JoinUsPage() {
               Thank you for your interest in joining Mozilla Campus Club of SLIIT. Please use the
               following link to join our WhatsApp group.
             </p>
-            <p className="text-center mb-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:space-x-4 mt-4">
+              <Link
+                href="/"
+                className="w-full sm:w-auto text-center px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#111111] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors"
+              >
+                Back to Home
+              </Link>
+
               <a
                 href="https://chat.whatsapp.com/ClX4r9OY6R61ss00tRkNNS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline font-medium break-all hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                className="w-full sm:w-auto text-center px-5 py-2.5 rounded text-sm font-medium bg-[#EA7B2C] text-white hover:bg-[#cf6a1a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c76417] transition-colors"
               >
                 Join WhatsApp Group
               </a>
-            </p>
-            <div className="flex justify-center">
-              <Link
-                href="/"
-                className="px-5 py-2.5 rounded text-sm font-medium bg-black text-white hover:bg-[#EA7B2C] hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#EA7B2C] transition-colors"
-              >
-                Back to Home
-              </Link>
             </div>
           </CardContent>
         </Card>
