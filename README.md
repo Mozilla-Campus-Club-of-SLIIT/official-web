@@ -1,5 +1,10 @@
 # Mozilla Campus Club of SLIIT - Official Website
 
+[![GitHub issues](https://img.shields.io/github/issues/Mozilla-Campus-Club-of-SLIIT/official-web?style=flat-square)](https://github.com/Mozilla-Campus-Club-of-SLIIT/official-web/issues)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Mozilla-Campus-Club-of-SLIIT/official-web?style=flat-square)](https://github.com/Mozilla-Campus-Club-of-SLIIT/official-web/pulls)
+[![GitHub contributors](https://img.shields.io/github/contributors/Mozilla-Campus-Club-of-SLIIT/official-web?style=flat-square)](https://github.com/Mozilla-Campus-Club-of-SLIIT/official-web/graphs/contributors)
+[![GitHub stars](https://img.shields.io/github/stars/Mozilla-Campus-Club-of-SLIIT/official-web?style=flat-square)](https://github.com/Mozilla-Campus-Club-of-SLIIT/official-web/stargazers)
+
 Welcome to the **Mozilla Campus Club of SLIIT Official Website** repository! 🚀 This is the source code for our club's website, built using **Next.js**.
 
 We appreciate contributions from everyone! If you want to improve the website, fix issues, or add new features, follow the guidelines below to get started.
