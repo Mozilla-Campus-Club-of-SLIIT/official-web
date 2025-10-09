@@ -43,7 +43,15 @@ export function Footer() {
               <p>SLIIT Malabe Campus</p>
               <p>New Kandy Road</p>
               <p>Malabe, Sri Lanka</p>
-              <p>Email: infosliitmcc@gmail.com</p>
+              <p>
+                Email:{" "}
+                <a
+                  href="mailto:infosliitmcc@gmail.com"
+                  className="hover:text-primary hover:underline transition-colors"
+                >
+                  infosliitmcc@gmail.com
+                </a>
+              </p>
             </div>
           </div>
 
