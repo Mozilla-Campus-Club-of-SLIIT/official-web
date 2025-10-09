@@ -65,7 +65,7 @@ export function Navbar() {
               hover:text-black
             "
           >
-            <Link href="/join-us" className="w-full h-full block">
+            <Link href="/apply" className="w-full h-full block">
               Join SLIIT Mozilla!
             </Link>
           </Button>
@@ -120,7 +120,7 @@ export function Navbar() {
               hover:text-black
             "
           >
-            <Link href="/join-us" className="w-full h-full block">
+            <Link href="/apply" className="w-full h-full block">
               Join SLIIT Mozilla!
             </Link>
           </Button>

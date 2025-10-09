@@ -56,8 +56,8 @@ export default function JoinUsPage() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) nextErrors.email = "Invalid email"
 
     if (!studentId.trim()) nextErrors.studentId = "Student ID is required"
-    else if (!/^(IT|EN|BS|HS)\d{8}$/i.test(studentId.trim()))
-      nextErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+    else if (!/^IT\d{8}$/i.test(studentId.trim()))
+      nextErrors.studentId = "Format: IT followed by 8 digits"
     if (!academicYear) nextErrors.academicYear = "Select academic year"
     if (!semester) nextErrors.semester = "Select semester"
     if (!specialization) nextErrors.specialization = "Select specialization"
@@ -177,7 +177,7 @@ export default function JoinUsPage() {
     }
 
     try {
-      const res = await fetch("/api/join-us", {
+      const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -220,7 +220,7 @@ export default function JoinUsPage() {
       if (backendMsg.includes("Invalid GitHub URL"))
         newFieldErrors.github = "Enter a valid GitHub profile URL"
       if (backendMsg.includes("Invalid student ID"))
-        newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+        newFieldErrors.studentId = "Format: IT followed by 8 digits"
       if (backendMsg.includes("Invalid email")) newFieldErrors.email = "Invalid email"
       if (backendMsg.includes("Full name required"))
         newFieldErrors.fullName = "Full name is required"
@@ -302,7 +302,7 @@ export default function JoinUsPage() {
 
   return (
     <div className="container mx-auto max-w-2xl py-10">
-      <h1 className="text-3xl font-bold mb-6">Join Us</h1>
+      <h1 className="text-3xl font-bold mb-6">Application Form</h1>
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate>
         {/* Full Name */}
         <div>
@@ -367,11 +367,19 @@ export default function JoinUsPage() {
             value={studentId}
             onChange={(e) => {
               let v = e.target.value.toUpperCase()
-              v = v.slice(0, 10)
+              if (v.length > 10) v = v.slice(0, 10)
               if (v.length <= 2) {
-                v = v.replace(/[^IT]/g, "")
+                // Only allow "IT" as the prefix
+                if (v === "I" || v === "IT") v = v
+                else v = v.replace(/[^IT]/g, "")
               } else {
-                v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
+                // Ensure first two characters are "IT", then only digits
+                const prefix = v.slice(0, 2)
+                if (prefix === "IT") {
+                  v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
+                } else {
+                  v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
+                }
               }
               setStudentId(v)
             }}
