@@ -8,6 +8,7 @@ export default function GoogleReCaptchaWrapper({ children }: { children: React.R
 
   if (!siteKey) {
     console.warn("Missing NEXT_PUBLIC_RECAPTCHA_SITE_KEY in .env.local")
+    return <>{children}</>
   }
 
   return (
