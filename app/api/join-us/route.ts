@@ -58,36 +58,32 @@ export async function POST(req: NextRequest) {
     //console.log("✅ Received reCAPTCHA token:", token)
 
     // Site Verify
-    const recaptchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        secret: secretKey!,
-        response: token,
-      }),
-    })
+    try {
+      const recaptchaResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: secretKey,
+          response: token,
+        }),
+      })
 
-    // To check recaptcha is working correctly
-    const verificationResult = await recaptchaResponse.json()
-    //console.log("✅ reCAPTCHA verification result:", verificationResult)
+      const verificationResult = await recaptchaResponse.json()
 
-    // Recaptcha v3 accept action
-    // This action is created by when your key is requesting tokens
-
-    if (verificationResult.action !== "join_us_submit") {
+      if (
+        !verificationResult.success ||
+        verificationResult.action !== "join_us_submit" ||
+        verificationResult.score < 0.5
+      ) {
+        return NextResponse.json(
+          { success: false, error: "reCAPTCHA verification failed" },
+          { status: 400 },
+        )
+      }
+    } catch (error) {
       return NextResponse.json(
-        { success: false, error: "reCAPTCHA action mismatch" },
-        { status: 400 },
-      )
-    }
-
-    // Error handling, if the verification result score is below 0.5 or verification result isn't success, it sends "reCAPTCHA verification failed" error
-    if (!verificationResult.success || verificationResult.score < 0.5) {
-      return NextResponse.json(
-        { success: false, error: "reCAPTCHA verification failed" },
-        { status: 400 },
+        { success: false, error: "Failed to verify reCAPTCHA" },
+        { status: 500 },
       )
     }
 
