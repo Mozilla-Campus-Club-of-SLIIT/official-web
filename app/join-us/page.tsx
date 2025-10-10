@@ -185,7 +185,9 @@ export default function JoinUsPage() {
       token,
     }
 
-    console.log("reCAPTCHA token:", token)
+    if (process.env.NODE_ENV === "development") {
+      console.log("reCAPTCHA token:", token)
+    }
 
     try {
       const res = await fetch("/api/join-us", {
