@@ -139,8 +139,12 @@ export default function JoinUsPage() {
     e.preventDefault()
     // Touch all fields to show inline errors
     if (!executeV3) {
-      throw new Error("reCAPTCHA not ready. Please reload and try again.")
+      if (process.env.NODE_ENV === "development") {
+        console.warn("reCAPTCHA not ready. Please reload and try again.")
+      }
+      return
     }
+
     const token = await executeV3("join_us_submit")
 
     ;[
