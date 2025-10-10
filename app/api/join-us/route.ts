@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     // After configuration, reCAPTCHA will help protect your forms from spam and abuse by verifying the authenticity of user submissions.
 
     // Secret key from environmental variables
-    const secretKey = process.env.RECAPTCHA_SECRET_KEY!
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY || ""
     if (!secretKey) {
       return NextResponse.json(
         { success: false, error: "Missing reCAPTCHA secret key" },
