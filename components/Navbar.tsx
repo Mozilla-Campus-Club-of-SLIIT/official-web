@@ -65,9 +65,14 @@ export function Navbar() {
               hover:text-black
             "
           >
-            <Link href="/join-us" className="w-full h-full block">
-              Join SLIIT Mozilla!
-            </Link>
+          <a
+            href="https://links.sliitmozilla.org/join"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-full block"
+          >
+            Join SLIIT Mozilla!
+          </a>
           </Button>
         </div>
 
@@ -120,9 +125,14 @@ export function Navbar() {
               hover:text-black
             "
           >
-            <Link href="/join-us" className="w-full h-full block">
-              Join SLIIT Mozilla!
-            </Link>
+          <a
+            href="https://links.sliitmozilla.org/join"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-full block"
+          >
+            Join SLIIT Mozilla!
+          </a>
           </Button>
           <hr />
         </div>
