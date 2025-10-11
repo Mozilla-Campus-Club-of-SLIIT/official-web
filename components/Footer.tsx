@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Github, Linkedin, Youtube } from "lucide-
 export function Footer() {
   return (
     <footer className="bg-gray-100 py-12">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <img src="/assets/Mozilla-logo.png" alt="Mozilla Logo" className="h-8 w-auto mb-2" />
@@ -16,7 +16,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className="md:pl-4">
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <div className="flex flex-col space-y-2">
               <Link href="/" className="text-sm hover:text-primary">
@@ -37,7 +37,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="md:pl-4">
             <h4 className="font-semibold mb-4">Contact</h4>
             <div className="text-sm space-y-2">
               <p>SLIIT Malabe Campus</p>
@@ -55,7 +55,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center">
             <h4 className="font-semibold mb-4">Follow Us on Socials!</h4>
             <div className="flex space-x-4">
               <Link href="https://www.facebook.com/sliitmozilla" className="hover:text-primary">
