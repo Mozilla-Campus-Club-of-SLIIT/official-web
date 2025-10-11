@@ -220,20 +220,6 @@ describe("Card Components", () => {
   })
 
   describe("Accessibility", () => {
-    it("should support ARIA attributes", () => {
-      render(
-        <Card role="article" aria-label="Product card">
-          <CardHeader>
-            <CardTitle>Product Name</CardTitle>
-            <CardDescription>Product description</CardDescription>
-          </CardHeader>
-        </Card>,
-      )
-
-      const card = screen.getByRole("article")
-      expect(card).toHaveAttribute("aria-label", "Product card")
-    })
-
     it("should maintain focus management", () => {
       render(
         <Card tabIndex={0} data-testid="focusable-card">

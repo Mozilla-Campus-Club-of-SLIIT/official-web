@@ -112,10 +112,10 @@ describe("Footer Component", () => {
 
     // Note: The current implementation doesn't have target="_blank" or rel attributes
     // This test verifies the links exist and could be extended if security attributes are added
-    externalLinks.forEach((link) => {
+    for (const link of Array.from(externalLinks)) {
       expect(link).toBeInTheDocument()
       expect(link.getAttribute("href")).toBeTruthy()
-    })
+    }
   })
 
   it("should render copyright information", () => {
@@ -149,9 +149,9 @@ describe("Footer Component", () => {
       "Follow Us on Socials!",
     ]
 
-    sections.forEach((sectionTitle) => {
+    for (const sectionTitle of sections) {
       expect(screen.getByText(sectionTitle)).toBeInTheDocument()
-    })
+    }
   })
 
   it("should have accessible social media links", () => {

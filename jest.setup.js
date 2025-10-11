@@ -45,7 +45,7 @@ jest.mock("next/navigation", () => ({
 }))
 
 // Mock window.matchMedia
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(globalThis, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
     matches: false,
@@ -60,13 +60,19 @@ Object.defineProperty(window, "matchMedia", {
 })
 
 // Mock ResizeObserver
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   constructor(cb) {
     this.cb = cb
   }
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe() {
+    // mock implementation
+  }
+  unobserve() {
+    // mock implementation
+  }
+  disconnect() {
+    // mock implementation
+  }
 }
 
 // Suppress console errors in tests
