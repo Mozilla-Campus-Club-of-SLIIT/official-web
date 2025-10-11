@@ -2,6 +2,18 @@
 import { useState, useRef, useCallback } from "react"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { InputField } from "@/components/ui/input-field"
+import {
+  isNonEmpty,
+  isOnlyLettersSpaces,
+  isEmail,
+  isStudentId,
+  isLinkedIn,
+  isGithub,
+  minLen,
+  isDigits,
+  isDigitsRange,
+} from "@/lib/validation"
 
 interface FieldErrors {
   fullName?: string
@@ -47,52 +59,31 @@ export default function JoinUsPage() {
 
   const validate = useCallback((): FieldErrors => {
     const nextErrors: FieldErrors = {}
-    // Full Name: only letters & spaces, non-empty
-    if (!fullName.trim()) nextErrors.fullName = "Full name is required"
-    else if (!/^[A-Za-z ]+$/.test(fullName.trim())) nextErrors.fullName = "Only letters and spaces"
-    // Email: basic pattern
-    if (!email.trim()) nextErrors.email = "Email is required"
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) nextErrors.email = "Invalid email"
+    if (!isNonEmpty(fullName)) nextErrors.fullName = "Full name is required"
+    else if (!isOnlyLettersSpaces(fullName)) nextErrors.fullName = "Only letters and spaces"
 
-    if (!studentId.trim()) nextErrors.studentId = "Student ID is required"
-    else if (!/^(IT|EN|BS|HS)\d{8}$/i.test(studentId.trim()))
+    if (!isNonEmpty(email)) nextErrors.email = "Email is required"
+    else if (!isEmail(email)) nextErrors.email = "Invalid email"
+
+    if (!isNonEmpty(studentId)) nextErrors.studentId = "Student ID is required"
+    else if (!isStudentId(studentId))
       nextErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
-    if (!academicYear) nextErrors.academicYear = "Select academic year"
-    if (!semester) nextErrors.semester = "Select semester"
-    if (!specialization) nextErrors.specialization = "Select specialization"
+    if (!isNonEmpty(academicYear)) nextErrors.academicYear = "Select academic year"
+    if (!isNonEmpty(semester)) nextErrors.semester = "Select semester"
+    if (!isNonEmpty(specialization)) nextErrors.specialization = "Select specialization"
 
-    // WhatsApp
-    if (!/^[0-9]{1,3}$/.test(whatsappCountryDigits))
+    if (!isDigitsRange(whatsappCountryDigits, 1, 3))
       nextErrors.whatsappCountry = "Country code 1-3 digits"
-    if (!/^[0-9]{9}$/.test(whatsappNumber)) nextErrors.whatsappNumber = "Exactly 9 digits"
+    if (!isDigits(whatsappNumber, 9)) nextErrors.whatsappNumber = "Exactly 9 digits"
 
-    // URLs
-    const urlOk = (v: string) => {
-      try {
-        new URL(v)
-        return true
-      } catch {
-        return false
-      }
-    }
-    if (!linkedin.trim()) nextErrors.linkedin = "LinkedIn URL required"
-    else if (
-      !/^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub)\/[A-Za-z0-9_-]+\/?$/i.test(
-        linkedin.trim(),
-      ) &&
-      !/^(linkedin\.com\/(in|pub)\/[A-Za-z0-9_-]+\/?$)/i.test(linkedin.trim())
-    )
-      nextErrors.linkedin = "Enter a valid LinkedIn profile URL"
+    if (!isNonEmpty(linkedin)) nextErrors.linkedin = "LinkedIn URL required"
+    else if (!isLinkedIn(linkedin)) nextErrors.linkedin = "Enter a valid LinkedIn profile URL"
 
-    if (!github.trim()) nextErrors.github = "GitHub URL required"
-    else if (
-      !/^(https?:\/\/)?(www\.)?github\.com\/[A-Za-z0-9_.-]+\/?$/i.test(github.trim()) &&
-      !/^(github\.com\/[A-Za-z0-9_.-]+\/?$)/i.test(github.trim())
-    )
-      nextErrors.github = "Enter a valid GitHub profile URL"
+    if (!isNonEmpty(github)) nextErrors.github = "GitHub URL required"
+    else if (!isGithub(github)) nextErrors.github = "Enter a valid GitHub profile URL"
 
-    if (!reason.trim()) nextErrors.reason = "Reason required"
-    else if (reason.trim().length < 10) nextErrors.reason = "Min 10 characters"
+    if (!isNonEmpty(reason)) nextErrors.reason = "Reason required"
+    else if (!minLen(reason, 10)) nextErrors.reason = "Min 10 characters"
 
     if (!preferredTeams || preferredTeams.length === 0) {
       nextErrors.preferredTeam = "Select at least one team"
@@ -123,7 +114,6 @@ export default function JoinUsPage() {
   const onCheckboxChange = (team: string) => {
     setPreferredTeams((prev) => {
       const updated = prev.includes(team) ? prev.filter((t) => t !== team) : [...prev, team]
-      // Remove error if at least one selected
       if (updated.length > 0) {
         setErrors((errs) => ({ ...errs, preferredTeam: undefined }))
       }
@@ -133,7 +123,6 @@ export default function JoinUsPage() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // Touch all fields to show inline errors
     ;[
       "fullName",
       "email",
@@ -182,14 +171,30 @@ export default function JoinUsPage() {
         body: JSON.stringify(payload),
         cache: "no-store",
       })
-      const text = await res.text()
-      let json: any
-      try {
-        json = JSON.parse(text)
-      } catch {
-        throw new Error("Non-JSON response")
+      const json: { success: boolean; errors?: string[] } = await res.json()
+      if (!res.ok || !json.success) {
+        const backendErrors = json?.errors ?? ["Submission failed"]
+        const newFieldErrors: Partial<FieldErrors> = {}
+        backendErrors.forEach((msg) => {
+          if (msg.includes("Invalid LinkedIn URL"))
+            newFieldErrors.linkedin = "Enter a valid LinkedIn profile URL"
+          if (msg.includes("Invalid GitHub URL"))
+            newFieldErrors.github = "Enter a valid GitHub profile URL"
+          if (msg.includes("Invalid student ID"))
+            newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+          if (msg.includes("Invalid email")) newFieldErrors.email = "Invalid email"
+          if (msg.includes("Full name required")) newFieldErrors.fullName = "Full name is required"
+          if (msg.includes("Academic year required"))
+            newFieldErrors.academicYear = "Select academic year"
+          if (msg.includes("Semester required")) newFieldErrors.semester = "Select semester"
+          if (msg.includes("Specialization required"))
+            newFieldErrors.specialization = "Select specialization"
+          if (msg.includes("Reason too short")) newFieldErrors.reason = "Min 10 characters"
+          if (msg.includes("WhatsApp required")) newFieldErrors.whatsappNumber = "WhatsApp required"
+        })
+        setErrors((prev) => ({ ...prev, ...newFieldErrors }))
+        throw new Error(backendErrors.join(", "))
       }
-      if (!res.ok || !json.success) throw new Error(json.error || "Submission failed")
 
       // Reset form
       setFullName("")
@@ -211,28 +216,8 @@ export default function JoinUsPage() {
       setSubmitted(true)
     } catch (err: any) {
       setIsError(true)
-      // Try to parse backend error and set field errors
-      let backendMsg = err.message || ""
-      const newFieldErrors: Partial<FieldErrors> = {}
-      if (backendMsg.includes("Invalid LinkedIn URL"))
-        newFieldErrors.linkedin = "Enter a valid LinkedIn profile URL"
-      if (backendMsg.includes("Invalid GitHub URL"))
-        newFieldErrors.github = "Enter a valid GitHub profile URL"
-      if (backendMsg.includes("Invalid student ID"))
-        newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
-      if (backendMsg.includes("Invalid email")) newFieldErrors.email = "Invalid email"
-      if (backendMsg.includes("Full name required"))
-        newFieldErrors.fullName = "Full name is required"
-      if (backendMsg.includes("Academic year required"))
-        newFieldErrors.academicYear = "Select academic year"
-      if (backendMsg.includes("Semester required")) newFieldErrors.semester = "Select semester"
-      if (backendMsg.includes("Specialization required"))
-        newFieldErrors.specialization = "Select specialization"
-      if (backendMsg.includes("Reason too short")) newFieldErrors.reason = "Min 10 characters"
-      if (backendMsg.includes("WhatsApp required"))
-        newFieldErrors.whatsappNumber = "WhatsApp required"
-      setErrors((prev) => ({ ...prev, ...newFieldErrors }))
-      setMessage("Submission failed: " + backendMsg)
+      const msg = err?.message || "Submission failed"
+      setMessage("Submission failed: " + msg)
     } finally {
       setLoading(false)
     }
@@ -243,7 +228,6 @@ export default function JoinUsPage() {
     setErrors(validate())
   }
 
-  // Dynamic input style helper
   const baseInput =
     "w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#EA7B2C] transition-colors"
   const errorInput = "border-red-500"
@@ -291,87 +275,63 @@ export default function JoinUsPage() {
       <h1 className="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6">Application Form</h1>
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate>
         {/* Full Name */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Full Name *</label>
-          <input
-            name="fullName"
-            value={fullName}
-            onChange={(e) => {
-              const val = e.target.value.replace(/[^A-Za-z ]/g, "")
-              setFullName(val)
-              // live validation
-              setErrors((prev) => ({
-                ...prev,
-                fullName: !val.trim()
-                  ? "Full name is required"
-                  : !/^[A-Za-z ]+$/.test(val.trim())
-                    ? "Only letters and spaces"
-                    : undefined,
-              }))
-            }}
-            onBlur={() => handleBlur("fullName")}
-            className={`${baseInput} ${errors.fullName && touched.fullName ? errorInput : ""}`}
-            placeholder="Full Name"
-            required
-            aria-invalid={!!errors.fullName && touched.fullName}
-            aria-describedby={errors.fullName && touched.fullName ? "fullName-error" : undefined}
-          />
-          {errors.fullName && touched.fullName && (
-            <p id="fullName-error" className="mt-1 text-xs text-red-600">
-              {errors.fullName}
-            </p>
-          )}
-        </div>
+        <InputField
+          label="Full Name *"
+          name="fullName"
+          value={fullName}
+          onChange={(e) => {
+            const val = e.target.value.replace(/[^A-Za-z ]/g, "")
+            setFullName(val)
+            setErrors((prev) => ({
+              ...prev,
+              fullName: !val.trim()
+                ? "Full name is required"
+                : !/^[A-Za-z ]+$/.test(val.trim())
+                  ? "Only letters and spaces"
+                  : undefined,
+            }))
+          }}
+          onBlur={() => handleBlur("fullName")}
+          className=""
+          placeholder="Full Name"
+          required
+          error={errors.fullName}
+          touched={touched.fullName}
+        />
 
         {/* Email */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Email *</label>
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => handleBlur("email")}
-            className={`${baseInput} ${errors.email && touched.email ? errorInput : ""}`}
-            placeholder="you@example.com"
-            required
-            aria-invalid={!!errors.email && touched.email}
-            aria-describedby={errors.email && touched.email ? "email-error" : undefined}
-          />
-          {errors.email && touched.email && (
-            <p id="email-error" className="mt-1 text-xs text-red-600">
-              {errors.email}
-            </p>
-          )}
-        </div>
+        <InputField
+          label="Email *"
+          name="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onBlur={() => handleBlur("email")}
+          placeholder="you@example.com"
+          required
+          error={errors.email}
+          touched={touched.email}
+        />
 
         {/* Student ID */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Student ID *</label>
-          <input
-            name="studentId"
-            value={studentId}
-            onChange={(e) => {
-              let v = e.target.value.toUpperCase()
-              if (v.length > 10) v = v.slice(0, 10)
-              if (v.length <= 2) v = v.replace(/[^A-Z]/g, "")
-              else v = v.slice(0, 2).replace(/[^A-Z]/g, "") + v.slice(2).replace(/[^0-9]/g, "")
-              setStudentId(v)
-            }}
-            maxLength={10}
-            onBlur={() => handleBlur("studentId")}
-            className={`${baseInput} ${errors.studentId && touched.studentId ? errorInput : ""}`}
-            placeholder="e.g. IT2023XXXX"
-            required
-            aria-invalid={!!errors.studentId && touched.studentId}
-            aria-describedby={errors.studentId && touched.studentId ? "studentId-error" : undefined}
-          />
-          {errors.studentId && touched.studentId && (
-            <p id="studentId-error" className="mt-1 text-xs text-red-600">
-              {errors.studentId}
-            </p>
-          )}
-        </div>
+        <InputField
+          label="Student ID *"
+          name="studentId"
+          value={studentId}
+          onChange={(e) => {
+            let v = e.target.value.toUpperCase()
+            if (v.length > 10) v = v.slice(0, 10)
+            if (v.length <= 2) v = v.replace(/[^A-Z]/g, "")
+            else v = v.slice(0, 2).replace(/[^A-Z]/g, "") + v.slice(2).replace(/[^0-9]/g, "")
+            setStudentId(v)
+          }}
+          maxLength={10}
+          onBlur={() => handleBlur("studentId")}
+          placeholder="e.g. IT2023XXXX"
+          required
+          error={errors.studentId}
+          touched={touched.studentId}
+        />
 
         {/* Academic Year & Semester */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -443,7 +403,7 @@ export default function JoinUsPage() {
           )}
         </div>
 
-        {/* WhatsApp Split with Country Code Datalist */}
+        {/* WhatsApp */}
         <div>
           <label className="block text-sm font-medium mb-1">WhatsApp Number *</label>
           <div className="flex flex-col sm:flex-row gap-3">
@@ -456,12 +416,15 @@ export default function JoinUsPage() {
                 list="country-codes"
                 value={whatsappCountryDigits}
                 onChange={(e) => {
-                  const raw = e.target.value
-                  const digitsMatch = raw.match(/^\d{1,3}/)
-                  const digits = digitsMatch ? digitsMatch[0] : raw.replace(/[^0-9]/g, "")
-                  setWhatsappCountryDigits(digits.slice(0, 3))
+                  const digits = e.target.value.replace(/\D/g, "").slice(0, 3)
+                  setWhatsappCountryDigits(digits)
                   setFieldTouched("whatsappCountry")
-                  setErrors(validate())
+                  setErrors((prev) => ({
+                    ...prev,
+                    whatsappCountry: isDigitsRange(digits, 1, 3)
+                      ? undefined
+                      : "Country code 1-3 digits",
+                  }))
                 }}
                 onBlur={() => handleBlur("whatsappCountry")}
                 className={`${baseInput} w-full sm:w-28 rounded-l-none border-l-0 ${errors.whatsappCountry && touched.whatsappCountry ? errorInput : ""}`}
@@ -483,7 +446,11 @@ export default function JoinUsPage() {
                 const v = e.target.value.replace(/[^0-9]/g, "").slice(0, 9)
                 setWhatsappNumber(v)
                 setFieldTouched("whatsappNumber")
-                setErrors(validate())
+                // Validate this field using the latest typed value to avoid stale-state flicker
+                setErrors((prev) => ({
+                  ...prev,
+                  whatsappNumber: isDigits(v, 9) ? undefined : "Exactly 9 digits",
+                }))
               }}
               onBlur={() => handleBlur("whatsappNumber")}
               className={`${baseInput} w-full ${errors.whatsappNumber && touched.whatsappNumber ? errorInput : ""}`}
@@ -707,40 +674,30 @@ export default function JoinUsPage() {
         </div>
 
         {/* LinkedIn */}
-        <div>
-          <label className="block text-sm font-medium mb-1">LinkedIn URL *</label>
-          <input
-            name="linkedin"
-            value={linkedin}
-            onChange={(e) => setLinkedin(e.target.value)}
-            onBlur={() => handleBlur("linkedin")}
-            className={`${baseInput} ${errors.linkedin && touched.linkedin ? errorInput : ""}`}
-            placeholder="https://www.linkedin.com/in/username"
-            required
-            aria-invalid={!!errors.linkedin && touched.linkedin}
-          />
-          {errors.linkedin && touched.linkedin && (
-            <p className="mt-1 text-xs text-red-600">{errors.linkedin}</p>
-          )}
-        </div>
+        <InputField
+          label="LinkedIn URL *"
+          name="linkedin"
+          value={linkedin}
+          onChange={(e) => setLinkedin(e.target.value)}
+          onBlur={() => handleBlur("linkedin")}
+          placeholder="https://www.linkedin.com/in/username"
+          required
+          error={errors.linkedin}
+          touched={touched.linkedin}
+        />
 
         {/* GitHub */}
-        <div>
-          <label className="block text-sm font-medium mb-1">GitHub URL *</label>
-          <input
-            name="github"
-            value={github}
-            onChange={(e) => setGithub(e.target.value)}
-            onBlur={() => handleBlur("github")}
-            className={`${baseInput} ${errors.github && touched.github ? errorInput : ""}`}
-            placeholder="https://github.com/username"
-            required
-            aria-invalid={!!errors.github && touched.github}
-          />
-          {errors.github && touched.github && (
-            <p className="mt-1 text-xs text-red-600">{errors.github}</p>
-          )}
-        </div>
+        <InputField
+          label="GitHub URL *"
+          name="github"
+          value={github}
+          onChange={(e) => setGithub(e.target.value)}
+          onBlur={() => handleBlur("github")}
+          placeholder="https://github.com/username"
+          required
+          error={errors.github}
+          touched={touched.github}
+        />
 
         {/* Reason */}
         <div>
@@ -764,16 +721,13 @@ export default function JoinUsPage() {
         </div>
 
         {/* Other Clubs */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Other Clubs</label>
-          <input
-            name="otherClubs"
-            value={otherClubs}
-            onChange={(e) => setOtherClubs(e.target.value)}
-            className={baseInput}
-            placeholder="If none, leave blank"
-          />
-        </div>
+        <InputField
+          label="Other Clubs"
+          name="otherClubs"
+          value={otherClubs}
+          onChange={(e) => setOtherClubs(e.target.value)}
+          placeholder="If none, leave blank"
+        />
 
         {/* Preferred Teams */}
         <div>

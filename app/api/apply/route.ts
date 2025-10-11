@@ -1,13 +1,67 @@
 import { NextRequest, NextResponse } from "next/server"
 import { google } from "googleapis"
+import { isEmail } from "@/lib/validation"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
+// In-memory per-IP sliding window rate limiter
+const rateLimitStore = new Map<string, number[]>()
+const WINDOW_MS = 60 * 1000 // 1 minute window
+const MAX_REQUESTS = 5
+
+function getClientIp(req: NextRequest): string {
+  const xff = req.headers.get("x-forwarded-for") || ""
+  const ip = xff.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown"
+  return ip
+}
+
+function checkRateLimit(ip: string) {
+  const now = Date.now()
+  const windowStart = now - WINDOW_MS
+  const timestamps = rateLimitStore.get(ip) || []
+  const recent = timestamps.filter((t) => t > windowStart)
+  if (recent.length >= MAX_REQUESTS) {
+    const oldest = recent[0]
+    const retryAfterSec = Math.max(1, Math.ceil((oldest + WINDOW_MS - now) / 1000))
+    return { allowed: false, retryAfterSec }
+  }
+  recent.push(now)
+  rateLimitStore.set(ip, recent)
+  return { allowed: true }
+}
+
+// Define the expected shape of the application payload
+type ApplicationData = {
+  email: string
+  fullName: string
+  studentId: string
+  academicYear: string
+  semester: string
+  specialization: string
+  whatsapp: string
+  linkedin: string
+  github: string
+  reason: string
+  otherClubs?: string
+  preferredTeam?: string
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    // Rate limiting
+    const ip = getClientIp(req)
+    const { allowed, retryAfterSec } = checkRateLimit(ip)
+    if (!allowed) {
+      return NextResponse.json(
+        { success: false, errors: ["Too many requests, please try again later."] },
+        { status: 429, headers: { "Retry-After": String(retryAfterSec) } },
+      )
+    }
+
+    // Parse and type request body
+    const body: ApplicationData = await req.json()
 
     const {
       email,
@@ -24,9 +78,9 @@ export async function POST(req: NextRequest) {
       preferredTeam,
     } = body
 
-    // Basic validation (mirror client)
+    // Field validation
     const errors: string[] = []
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("Invalid email")
+    if (!email || !isEmail(email)) errors.push("Invalid email")
     if (!fullName) errors.push("Full name required")
     if (!studentId || !/^(IT|EN|BS|HS)\d{8}$/i.test(studentId)) errors.push("Invalid student ID")
     if (!academicYear) errors.push("Academic year required")
@@ -43,22 +97,21 @@ export async function POST(req: NextRequest) {
     if (!whatsapp) errors.push("WhatsApp required")
 
     if (errors.length) {
-      return NextResponse.json({ success: false, error: errors.join(", ") }, { status: 400 })
+      return NextResponse.json({ success: false, errors }, { status: 400 })
     }
 
-    // Normalize private key (handle \n in .env)
+    // Env config and Google Sheets client
     const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n")
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL
     const sheetId = process.env.GOOGLE_SHEET_ID
 
     if (!privateKey || !clientEmail || !sheetId) {
       return NextResponse.json(
-        { success: false, error: "Server misconfiguration" },
+        { success: false, errors: ["Server misconfiguration"] },
         { status: 500 },
       )
     }
 
-    // Initialize Google Sheets client
     const jwt = new google.auth.JWT({
       email: clientEmail,
       key: privateKey,
@@ -95,6 +148,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (err: any) {
     console.error("Apply submission error:", err)
-    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ success: false, errors: ["Internal server error"] }, { status: 500 })
   }
 }
