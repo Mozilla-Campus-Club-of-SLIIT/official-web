@@ -1,6 +1,17 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { useState } from "react"
 
 const blogPosts = [
   {
@@ -72,16 +83,55 @@ const blogPosts = [
     mediumUrl:
       "https://medium.com/@infosliitmcc/understanding-the-prevailing-ai-applications-1c50b25d0c61",
   },
+  {
+    id: "7",
+    title: "Top 5 Cyber Threats Every University Student Should Know",
+    imageUrl: "/assets/blog7.png",
+    excerpt:
+      "As a university student, you're constantly connected to the internet for research, assignments, social media, and entertainment. While the digital world offers incredible opportunities, it also exposes you to various cyber threats that can compromise your personal information, academic work, and financial security.",
+    author: "Heshan Kariyawasam",
+    date: "2025-08-28",
+    tags: ["Cybersecurity", "Cyber Threats"],
+    mediumUrl:
+      "https://medium.com/@infosliitmcc/top-5-cyber-threats-every-university-student-should-know-ccd74a9773ac",
+  },
+  {
+    id: "8",
+    title: "A Beginner’s Guide to Mastering APIs with Postman and HTTPie",
+    imageUrl: "/assets/blog8.png",
+    excerpt:
+      "APIs power most of the apps we use every day, from logging in with Google to checking the weather or ordering food online. But for beginners, APIs can feel like a mysterious black box.",
+    author: "Janitha Gamage",
+    date: "2025-10-01",
+    tags: ["API", "HTTPie", "Postman"],
+    mediumUrl:
+      "https://medium.com/@infosliitmcc/a-beginners-guide-to-mastering-apis-with-postman-and-httpie-6ba30d109491",
+  },
 ]
 
 export default function Blog() {
+  const [currentPage, setCurrentPage] = useState(1)
+  const postsPerPage = 6
+  const totalPages = Math.ceil(blogPosts.length / postsPerPage)
+
+  // Calculate the posts to display on current page
+  const startIndex = (currentPage - 1) * postsPerPage
+  const endIndex = startIndex + postsPerPage
+  const currentPosts = blogPosts.slice(startIndex, endIndex)
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
     <div className="py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-12">Editor's Corner</h1>
+        <h1 className="text-4xl font-bold text-center mb-12">Editor&apos;s Corner</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
+          {currentPosts.map((post) => (
             // Commented out the original internal link for blog pages:
             // <Link href={`/blog/${post.id}`} key={post.id}>
             //   ...
@@ -121,6 +171,47 @@ export default function Blog() {
             </a>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => handlePageChange(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : "cursor-pointer"
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
 
         <div className="mt-8 text-center">
           <a

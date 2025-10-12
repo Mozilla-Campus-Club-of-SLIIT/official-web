@@ -55,6 +55,13 @@ const events: Partial<Event>[] = [
 // past events data
 const pastEvents: Partial<Event>[] = [
   {
+    title: "Inroduction to OWASP Top 10",
+    image: "/assets/OWASPTop10.png",
+    url: "https://www.youtube.com/live/2xSr_IZGrFk?si=bUST_M5IuJa9xt9w",
+    description:
+      "The 1st live tech session conducted by Heshan Kariyawasam.Learn about the most critical web application vulnerabilities and how to protect your applications! A deep dive into the OWASP Top 10, strengthening your security knowledge and helping you build safer applications. Organized by the Mozilla Campus Club of SLIIT.",
+  },
+  {
     title: "Bashaway 2024",
     image: "/assets/bashaway.jpg",
     url: "https://www.facebook.com/share/p/1BGnzvHnXn/?mibextid=oFDknk",
