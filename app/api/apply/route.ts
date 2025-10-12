@@ -12,8 +12,11 @@ const WINDOW_MS = 60 * 1000 // 1 minute window
 const MAX_REQUESTS = 5
 
 function getClientIp(req: NextRequest): string {
-  const xff = req.headers.get("x-forwarded-for") || ""
-  const ip = xff.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown"
+  const ip =
+    (req as any).ip ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown"
   return ip
 }
 
