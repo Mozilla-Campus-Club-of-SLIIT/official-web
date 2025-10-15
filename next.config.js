@@ -4,16 +4,25 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { 
+  images: {
     unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
     ],
   },
   trailingSlash: true,
-};
+  async redirects() {
+    return [
+      {
+        source: "/join-us",
+        destination: "/apply",
+        permanent: true,
+      },
+    ]
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
