@@ -8,12 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "prepare": "husky install && shx chmod +x .husky/* && shx chmod +x .husky/_/*",
-    "format": "prettier --write \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\" \"__tests__/**/*.{js,ts,jsx,tsx,json,css,md}\" \"jest.*.js\"",
-    "format:check": "prettier --check \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\" \"__tests__/**/*.{js,ts,jsx,tsx,json,css,md}\" \"jest.*.js\""
+    "format": "prettier --write \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"app/**/*.{js,ts,jsx,tsx,json,css,md}\" \"components/**/*.{js,ts,jsx,tsx,json,css,md}\" \"data/**/*.{js,ts,jsx,tsx,json,css,md}\" \"hooks/**/*.{js,ts,jsx,tsx,json,css,md}\" \"lib/**/*.{js,ts,jsx,tsx,json,css,md}\""
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -81,17 +78,10 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.1.0",
-    "@commitlint/config-conventional": "^20.0.0",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/jest": "^30.0.0",
-    "chalk": "^5.6.2",
-    "husky": "^9.1.7",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
-    "lint-staged": "^16.2.4",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^16.1.6",
     "prettier": "^3.6.2"
   },
   "lint-staged": {
