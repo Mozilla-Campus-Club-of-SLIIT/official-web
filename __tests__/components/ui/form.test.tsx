@@ -103,7 +103,7 @@ describe("Form Components", () => {
   })
 
   // Helper component for FormLabel tests
-  function SimpleFormWithLabel({ children }: { readonly children: React.ReactNode }) {
+  function SimpleFormWithLabel({ children }: { children: React.ReactNode }) {
     const form = useForm()
     return (
       <Form {...form}>
