@@ -256,7 +256,7 @@ export default function JoinUsPage() {
         <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
             <CardTitle className="text-center text-orange-600">
-              Registration Form - Mozilla Campus Club of SLIIT
+              Application Form - Mozilla Campus Club of SLIIT
             </CardTitle>
           </CardHeader>
           <CardContent>
