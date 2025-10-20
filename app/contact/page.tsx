@@ -12,18 +12,11 @@ import emailjs from "@emailjs/browser"
 import { useState } from "react"
 import { set } from "date-fns"
 
-// const formSchema = z.object({
-//   name: z.string().min(2, 'Name must be at least 2 characters'),
-//   email: z.string().email('Invalid email address'),
-//   subject: z.string().min(5, 'Subject must be at least 5 characters'),
-//   message: z.string().min(10, 'Message must be at least 10 characters')
-// })
-
 const formSchema = z.object({
-  name: z.string(),
-  email: z.string(),
-  subject: z.string(),
-  message: z.string(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
 })
 
 export default function Contact() {
