@@ -16,45 +16,6 @@ import {
   FormField,
 } from "../../../components/ui/form"
 
-// Helper function to render username field
-function renderUsernameField(control: any) {
-  return (
-    <FormField
-      control={control}
-      name="username"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Username</FormLabel>
-          <FormControl>
-            <input {...field} placeholder="Enter username" />
-          </FormControl>
-          <FormDescription>This is your public display name.</FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  )
-}
-
-// Helper function to render email field
-function renderEmailField(control: any) {
-  return (
-    <FormField
-      control={control}
-      name="email"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Email</FormLabel>
-          <FormControl>
-            <input {...field} type="email" placeholder="Enter email" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  )
-}
-
 // Test component that uses the form components
 function TestFormComponent() {
   const form = useForm({
@@ -64,13 +25,38 @@ function TestFormComponent() {
     },
   })
 
-  const handleSubmit = form.handleSubmit(() => {})
-
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit}>
-        {renderUsernameField(form.control)}
-        {renderEmailField(form.control)}
+      <form onSubmit={form.handleSubmit(() => {})}>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <input {...field} placeholder="Enter username" />
+              </FormControl>
+              <FormDescription>This is your public display name.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <input {...field} type="email" placeholder="Enter email" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <button type="submit">Submit</button>
       </form>
     </Form>
@@ -102,34 +88,38 @@ describe("Form Components", () => {
     })
   })
 
-  // Helper component for FormLabel tests
-  function SimpleFormWithLabel({ children }: { children: React.ReactNode }) {
-    const form = useForm()
-    return (
-      <Form {...form}>
-        <FormItem>{children}</FormItem>
-      </Form>
-    )
-  }
-
   describe("FormLabel", () => {
     it("should render as label element within form context", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormLabel>Test Label</FormLabel>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormLabel>Test Label</FormLabel>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const label = screen.getByText("Test Label")
       expect(label.tagName).toBe("LABEL")
     })
 
     it("should apply custom className", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormLabel className="text-destructive">Error Label</FormLabel>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormLabel className="text-destructive">Error Label</FormLabel>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const label = screen.getByText("Error Label")
       expect(label).toHaveClass("text-destructive")
@@ -138,11 +128,18 @@ describe("Form Components", () => {
 
   describe("FormDescription", () => {
     it("should render description text with correct styling", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormDescription>This is a description</FormDescription>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormDescription>This is a description</FormDescription>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const description = screen.getByText("This is a description")
       expect(description.tagName).toBe("P")
@@ -152,22 +149,36 @@ describe("Form Components", () => {
 
   describe("FormMessage", () => {
     it("should not render when there is no error message", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormMessage />
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormMessage />
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       // Should not render any error message
       expect(screen.queryByRole("paragraph")).not.toBeInTheDocument()
     })
 
     it("should render error message when provided as children", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormMessage>This is an error</FormMessage>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormMessage>This is an error</FormMessage>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const message = screen.getByText("This is an error")
       expect(message.tagName).toBe("P")
@@ -235,8 +246,9 @@ describe("Form Components", () => {
     })
 
     it("should support accessibility attributes", () => {
-      function AccessibleFormTest() {
+      const AccessibleForm = () => {
         const form = useForm()
+
         return (
           <Form {...form}>
             <FormItem>
@@ -250,7 +262,7 @@ describe("Form Components", () => {
         )
       }
 
-      render(<AccessibleFormTest />)
+      render(<AccessibleForm />)
 
       const input = screen.getByRole("textbox")
       const label = screen.getByText("Accessible Label")
@@ -262,29 +274,9 @@ describe("Form Components", () => {
     })
   })
 
-  // Helper function to render validation field
-  function renderValidationField(form: any) {
-    return (
-      <FormField
-        control={form.control}
-        name="required"
-        rules={{ required: "This field is required" }}
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel>Required Field</FormLabel>
-            <FormControl>
-              <input {...field} />
-            </FormControl>
-            <FormMessage>{fieldState.error?.message}</FormMessage>
-          </FormItem>
-        )}
-      />
-    )
-  }
-
   describe("Error Handling", () => {
     it("should display validation errors", () => {
-      function ValidationFormTest() {
+      const FormWithValidation = () => {
         const form = useForm({
           defaultValues: { required: "" },
           mode: "onChange",
@@ -292,12 +284,27 @@ describe("Form Components", () => {
 
         return (
           <Form {...form}>
-            <form>{renderValidationField(form)}</form>
+            <form>
+              <FormField
+                control={form.control}
+                name="required"
+                rules={{ required: "This field is required" }}
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel>Required Field</FormLabel>
+                    <FormControl>
+                      <input {...field} />
+                    </FormControl>
+                    <FormMessage>{fieldState.error?.message}</FormMessage>
+                  </FormItem>
+                )}
+              />
+            </form>
           </Form>
         )
       }
 
-      render(<ValidationFormTest />)
+      render(<FormWithValidation />)
 
       const input = screen.getByRole("textbox")
 
@@ -314,26 +321,40 @@ describe("Form Components", () => {
 
   describe("FormControl", () => {
     it("should render children correctly", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormControl>
-            <input data-testid="controlled-input" />
-          </FormControl>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormControl>
+                <input data-testid="controlled-input" />
+              </FormControl>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const input = screen.getByTestId("controlled-input")
       expect(input).toBeInTheDocument()
     })
 
     it("should handle forwarded props", () => {
-      render(
-        <SimpleFormWithLabel>
-          <FormControl data-testid="form-control">
-            <div>Control content</div>
-          </FormControl>
-        </SimpleFormWithLabel>,
-      )
+      const TestForm = () => {
+        const form = useForm()
+        return (
+          <Form {...form}>
+            <FormItem>
+              <FormControl data-testid="form-control">
+                <div>Control content</div>
+              </FormControl>
+            </FormItem>
+          </Form>
+        )
+      }
+
+      render(<TestForm />)
 
       const control = screen.getByTestId("form-control")
       expect(control).toBeInTheDocument()

@@ -28,7 +28,7 @@ jest.mock("lucide-react", () => ({
 import { Navbar } from "../../components/Navbar"
 
 // Mock scroll behavior
-Object.defineProperty(globalThis, "scrollY", {
+Object.defineProperty(window, "scrollY", {
   writable: true,
   value: 0,
 })
@@ -36,10 +36,10 @@ Object.defineProperty(globalThis, "scrollY", {
 describe("Navbar Component", () => {
   beforeEach(() => {
     // Reset scroll position
-    Object.defineProperty(globalThis, "scrollY", { writable: true, value: 0 })
+    Object.defineProperty(window, "scrollY", { writable: true, value: 0 })
 
     // Mock window.innerWidth for testing
-    Object.defineProperty(globalThis, "innerWidth", {
+    Object.defineProperty(window, "innerWidth", {
       writable: true,
       configurable: true,
       value: 1024,
@@ -95,16 +95,15 @@ describe("Navbar Component", () => {
       render(<Navbar />)
 
       // Find the mobile menu toggle button
-      const menuButton =
-        screen.getByTestId("menu-icon").closest("button") || new HTMLButtonElement()
+      const menuButton = screen.getByTestId("menu-icon").closest("button")
       expect(menuButton).toBeInTheDocument()
 
       // Find mobile menu container
-      const mobileMenu = document.querySelector(String.raw`.md\:hidden.absolute`)
+      const mobileMenu = document.querySelector(".md\\:hidden.absolute")
       expect(mobileMenu).toHaveClass("translate-x-full") // Initially hidden
 
       // Click to open menu
-      fireEvent.click(menuButton)
+      fireEvent.click(menuButton!)
 
       // Menu should be visible
       expect(mobileMenu).toHaveClass("translate-x-0")
@@ -117,16 +116,15 @@ describe("Navbar Component", () => {
       render(<Navbar />)
 
       // Open menu first
-      const menuButton =
-        screen.getByTestId("menu-icon").closest("button") || new HTMLButtonElement()
-      fireEvent.click(menuButton)
+      const menuButton = screen.getByTestId("menu-icon").closest("button")
+      fireEvent.click(menuButton!)
 
-      const mobileMenu = document.querySelector(String.raw`.md\:hidden.absolute`)
+      const mobileMenu = document.querySelector(".md\\:hidden.absolute")
       expect(mobileMenu).toHaveClass("translate-x-0")
 
       // Click menu button again to close (since the actual mobile link click behavior
       // requires routing which isn't available in test environment)
-      fireEvent.click(menuButton)
+      fireEvent.click(menuButton!)
 
       // Menu should close
       expect(mobileMenu).toHaveClass("translate-x-full")
@@ -143,8 +141,8 @@ describe("Navbar Component", () => {
       expect(navbar).toHaveClass("bg-white")
 
       // Simulate scroll
-      Object.defineProperty(globalThis, "scrollY", { writable: true, value: 100 })
-      fireEvent.scroll(globalThis.window)
+      Object.defineProperty(window, "scrollY", { writable: true, value: 100 })
+      fireEvent.scroll(window)
 
       // Wait for state update
       await waitFor(() => {
