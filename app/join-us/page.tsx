@@ -3,6 +3,8 @@ import { useState, useRef, useCallback } from "react"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
+import { useGoogleReCaptcha } from "@google-recaptcha/react"
+
 interface FieldErrors {
   fullName?: string
   email?: string
@@ -21,6 +23,7 @@ interface FieldErrors {
 const preferredTeamOptions = ["Dev", "Design", "Editorial", "TV", "Other"] as const
 
 export default function JoinUsPage() {
+  const { executeV3 } = useGoogleReCaptcha()
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [studentId, setStudentId] = useState("")
@@ -135,6 +138,15 @@ export default function JoinUsPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     // Touch all fields to show inline errors
+    if (!executeV3) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("reCAPTCHA not ready. Please reload and try again.")
+      }
+      return
+    }
+
+    const token = await executeV3("join_us_submit")
+
     ;[
       "fullName",
       "email",
@@ -174,6 +186,11 @@ export default function JoinUsPage() {
       reason: reason.trim(),
       otherClubs: otherClubs.trim() || "None",
       preferredTeam: preferredTeams.join(", "),
+      token,
+    }
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("reCAPTCHA token:", token)
     }
 
     try {
