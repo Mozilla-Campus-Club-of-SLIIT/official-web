@@ -66,8 +66,7 @@ export default function JoinUsPage() {
     else if (!isEmail(email)) nextErrors.email = "Invalid email"
 
     if (!isNonEmpty(studentId)) nextErrors.studentId = "Student ID is required"
-    else if (!isStudentId(studentId))
-      nextErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+    else if (!isStudentId(studentId)) nextErrors.studentId = "Format: IT followed by 8 digits"
     if (!isNonEmpty(academicYear)) nextErrors.academicYear = "Select academic year"
     if (!isNonEmpty(semester)) nextErrors.semester = "Select semester"
     if (!isNonEmpty(specialization)) nextErrors.specialization = "Select specialization"
@@ -181,7 +180,7 @@ export default function JoinUsPage() {
           if (msg.includes("Invalid GitHub URL"))
             newFieldErrors.github = "Enter a valid GitHub profile URL"
           if (msg.includes("Invalid student ID"))
-            newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+            newFieldErrors.studentId = "Format: IT followed by 8 digits"
           if (msg.includes("Invalid email")) newFieldErrors.email = "Invalid email"
           if (msg.includes("Full name required")) newFieldErrors.fullName = "Full name is required"
           if (msg.includes("Academic year required"))
@@ -239,7 +238,7 @@ export default function JoinUsPage() {
         <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
             <CardTitle className="text-center text-orange-600">
-              Registration Form - Mozilla Campus Club of SLIIT
+              Application Form - Mozilla Campus Club of SLIIT
             </CardTitle>
           </CardHeader>
           <CardContent>

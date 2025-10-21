@@ -3,6 +3,8 @@ import { useState, useRef, useCallback } from "react"
 import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 
+import { useGoogleReCaptcha } from "@google-recaptcha/react"
+
 interface FieldErrors {
   fullName?: string
   email?: string
@@ -21,6 +23,7 @@ interface FieldErrors {
 const preferredTeamOptions = ["Dev", "Design", "Editorial", "TV", "Other"] as const
 
 export default function JoinUsPage() {
+  const { executeV3 } = useGoogleReCaptcha()
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [studentId, setStudentId] = useState("")
@@ -56,8 +59,8 @@ export default function JoinUsPage() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) nextErrors.email = "Invalid email"
 
     if (!studentId.trim()) nextErrors.studentId = "Student ID is required"
-    else if (!/^(IT|EN|BS|HS)\d{8}$/i.test(studentId.trim()))
-      nextErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+    else if (!/^IT\d{8}$/i.test(studentId.trim()))
+      nextErrors.studentId = "Format: IT followed by 8 digits"
     if (!academicYear) nextErrors.academicYear = "Select academic year"
     if (!semester) nextErrors.semester = "Select semester"
     if (!specialization) nextErrors.specialization = "Select specialization"
@@ -135,6 +138,15 @@ export default function JoinUsPage() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     // Touch all fields to show inline errors
+    if (!executeV3) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("reCAPTCHA not ready. Please reload and try again.")
+      }
+      return
+    }
+
+    const token = await executeV3("join_us_submit")
+
     ;[
       "fullName",
       "email",
@@ -174,6 +186,11 @@ export default function JoinUsPage() {
       reason: reason.trim(),
       otherClubs: otherClubs.trim() || "None",
       preferredTeam: preferredTeams.join(", "),
+      token,
+    }
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("reCAPTCHA token:", token)
     }
 
     try {
@@ -220,7 +237,7 @@ export default function JoinUsPage() {
       if (backendMsg.includes("Invalid GitHub URL"))
         newFieldErrors.github = "Enter a valid GitHub profile URL"
       if (backendMsg.includes("Invalid student ID"))
-        newFieldErrors.studentId = "Format: IT|EN|BS|HS followed by 8 digits"
+        newFieldErrors.studentId = "Format: IT followed by 8 digits"
       if (backendMsg.includes("Invalid email")) newFieldErrors.email = "Invalid email"
       if (backendMsg.includes("Full name required"))
         newFieldErrors.fullName = "Full name is required"
@@ -256,7 +273,7 @@ export default function JoinUsPage() {
         <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
             <CardTitle className="text-center text-orange-600">
-              Registration Form - Mozilla Campus Club of SLIIT
+              Application Form - Mozilla Campus Club of SLIIT
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -367,9 +384,12 @@ export default function JoinUsPage() {
             value={studentId}
             onChange={(e) => {
               let v = e.target.value.toUpperCase()
-              if (v.length > 10) v = v.slice(0, 10)
-              if (v.length <= 2) v = v.replace(/[^A-Z]/g, "")
-              else v = v.slice(0, 2).replace(/[^A-Z]/g, "") + v.slice(2).replace(/[^0-9]/g, "")
+              v = v.slice(0, 10)
+              if (v.length <= 2) {
+                v = v.replace(/[^IT]/g, "")
+              } else {
+                v = "IT" + v.slice(2).replace(/[^0-9]/g, "")
+              }
               setStudentId(v)
             }}
             maxLength={10}
