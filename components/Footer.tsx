@@ -1,5 +1,13 @@
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Github, Linkedin, Youtube, MessageCircle } from "lucide-react"
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Github,
+  Linkedin,
+  Youtube,
+  MessageCircle,
+} from "lucide-react"
 
 export function Footer() {
   return (
@@ -83,7 +91,9 @@ export function Footer() {
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link
-                href="https://discord.gg/EqEUDnmkDZ" className="hover:text-primary block lg:hidden">
+                href="https://discord.gg/EqEUDnmkDZ"
+                className="hover:text-primary block lg:hidden"
+              >
                 <MessageCircle className="w-5 h-5" />
               </Link>
             </div>
