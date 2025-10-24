@@ -99,6 +99,8 @@ $ git push origin feature/your-feature-name
 
 Go to the **GitHub repository**, open a **Pull Request (PR)** from your branch, and add a short description.
 
+For detailed contribution guidelines, see our [CONTRIBUTING.md](https://github.com/Mozilla-Campus-Club-of-SLIIT/official-web/blob/main/CONTRIBUTING.md)
+
 ---
 
 ## 🔍 Code Style & Formatting
