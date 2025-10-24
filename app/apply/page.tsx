@@ -270,7 +270,7 @@ export default function JoinUsPage() {
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 mx-auto max-w-2xl py-8 md:py-10">
+    <div className="px-4 sm:px-6 lg:px-8 mx-auto max-w-2xl py-8 md:py-10 bg-[#f5f5f5] border border-gray-250 my-4">
       <h1 className="text-2xl sm:text-3xl font-bold mb-5 sm:mb-6">Application Form</h1>
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate>
         {/* Full Name */}
