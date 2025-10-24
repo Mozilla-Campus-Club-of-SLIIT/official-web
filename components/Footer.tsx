@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Github, Linkedin, Youtube } from "lucide-react"
+import { Facebook, Twitter, Instagram, Github, Linkedin, Youtube, MessageCircle } from "lucide-react"
 
 export function Footer() {
   return (
@@ -55,7 +55,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col">
             <h4 className="font-semibold mb-4">Follow Us on Socials!</h4>
             <div className="flex space-x-4">
               <Link href="https://www.facebook.com/sliitmozilla" className="hover:text-primary">
@@ -81,6 +81,19 @@ export function Footer() {
                 className="hover:text-primary"
               >
                 <Linkedin className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://discord.gg/EqEUDnmkDZ" className="hover:text-primary block lg:hidden">
+                <MessageCircle className="w-5 h-5" />
+              </Link>
+            </div>
+            <div className="mt-6 hidden lg:block">
+              <Link
+                href="https://discord.gg/EqEUDnmkDZ"
+                target="_blank"
+                className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded transition-colors"
+              >
+                Join Us on Discord
               </Link>
             </div>
           </div>
