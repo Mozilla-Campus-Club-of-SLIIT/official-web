@@ -54,7 +54,7 @@ $ yarn prepare
 
 ```sh
 # Start the Next.js development server
-$ npm run dev
+$c
 
 # OR using yarn
 $ yarn dev
