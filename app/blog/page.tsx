@@ -110,66 +110,94 @@ const blogPosts = [
 ]
 
 export default function Blog() {
+  const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 6
-  const totalPages = Math.ceil(blogPosts.length / postsPerPage)
 
-  // Calculate the posts to display on current page
+  // 1. Filter posts based on search term (title, excerpt, author, or tags)
+  const filteredPosts = blogPosts.filter((post) => {
+    const lower = searchTerm.toLowerCase()
+    return (
+      post.title.toLowerCase().includes(lower) ||
+      post.excerpt.toLowerCase().includes(lower) ||
+      post.author.toLowerCase().includes(lower) ||
+      post.tags.some((tag) => tag.toLowerCase().includes(lower))
+    )
+  })
+
+  // 2. Pagination logic on filtered posts
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage)
   const startIndex = (currentPage - 1) * postsPerPage
   const endIndex = startIndex + postsPerPage
-  const currentPosts = blogPosts.slice(startIndex, endIndex)
+  const currentPosts = filteredPosts.slice(startIndex, endIndex)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
-    // Scroll to top when page changes
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
+
+  // Reset pagination if search term changes (useEffect not strictly necessary for simple reset)
+  // Optionally reset page to 1 when search changes
+  // useEffect(() => { setCurrentPage(1); }, [searchTerm]);
 
   return (
     <div className="py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-12">Editor&apos;s Corner</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentPosts.map((post) => (
-            // Commented out the original internal link for blog pages:
-            // <Link href={`/blog/${post.id}`} key={post.id}>
-            //   ...
-            // </Link>
+        {/* --- Search Bar --- */}
+        <div className="mb-6 flex justify-center">
+          <input
+            type="text"
+            className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-400 transition"
+            placeholder="Search by title, author, tag, or keyword..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setCurrentPage(1) // Reset to first page on search change
+            }}
+          />
+        </div>
 
-            <a key={post.id} href={post.mediumUrl} target="_blank" rel="noopener noreferrer">
-              <Card className="h-full hover:shadow-lg transition-shadow">
-                <div className="relative h-48 w-full">
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.title}
-                    fill
-                    className="object-cover rounded-t-lg"
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle className="line-clamp-2 text-orange-600">{post.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
-                  <div className="flex justify-between items-center text-sm text-gray-500">
-                    <span>{post.author}</span>
-                    <span>{new Date(post.date).toLocaleDateString()}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentPosts.length === 0 ? (
+            <p className="col-span-full text-center text-gray-500 my-8">No blog posts found.</p>
+          ) : (
+            currentPosts.map((post) => (
+              <a key={post.id} href={post.mediumUrl} target="_blank" rel="noopener noreferrer">
+                <Card className="h-full hover:shadow-lg transition-shadow">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={post.imageUrl}
+                      alt={post.title}
+                      fill
+                      className="object-cover rounded-t-lg"
+                    />
                   </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </a>
-          ))}
+                  <CardHeader>
+                    <CardTitle className="line-clamp-2 text-orange-600">{post.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+                    <div className="flex justify-between items-center text-sm text-gray-500">
+                      <span>{post.author}</span>
+                      <span>{new Date(post.date).toLocaleDateString()}</span>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
+            ))
+          )}
         </div>
 
         {/* Pagination Controls */}
@@ -185,7 +213,6 @@ export default function Blog() {
                     }
                   />
                 </PaginationItem>
-
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <PaginationItem key={page}>
                     <PaginationLink
@@ -197,7 +224,6 @@ export default function Blog() {
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-
                 <PaginationItem>
                   <PaginationNext
                     onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
@@ -219,8 +245,8 @@ export default function Blog() {
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block font-medium text-primary group no-underline 
-                 after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-[1px] after:bg-current 
-                 after:w-0 after:transition-[width] after:duration-300 hover:after:w-full"
+                after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-[1px] after:bg-current 
+                after:w-0 after:transition-[width] after:duration-300 hover:after:w-full"
           >
             View More Blogs
             <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">

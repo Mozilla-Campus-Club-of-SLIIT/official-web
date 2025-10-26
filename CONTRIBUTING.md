@@ -28,50 +28,53 @@ Whether you’re a first-time contributor or a seasoned developer, this document
 - PRs should be opened from your fork’s branch → the main branch of the Mozilla Campus Club repository.
 - After pushing your branch, click “Compare & pull request” on GitHub.
 - Before submitting, confirm:
-   - Base repo: `Mozilla Campus Club of SLIIT`
-   - Base branch: `main`
-   - Head repo: `your fork`
-   - Head branch: `your working branch`
+  - Base repo: `Mozilla Campus Club of SLIIT`
+  - Base branch: `main`
+  - Head repo: `your fork`
+  - Head branch: `your working branch`
 - Add a clear PR title and short description.
 - For more info, refer to the [GitHub Pull Request Guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests).
 
-
 ### Do not combine multiple unrelated changes in one PR.
+
 - Avoid submitting 2–3 issue fixes in the same PR.
 - If an issue is too large, divide it into smaller, manageable PRs for easier review.
 
 ## ✅ Before Submitting Checklist
 
-- [ ] Code runs locally without errors  
-- [ ] Code formatted using Prettier (`npm run format`)  
-- [ ] Branch is up to date with `main`  
-- [ ] Commit messages follow the conventional format  
+- [ ] Code runs locally without errors
+- [ ] Code formatted using Prettier (`npm run format`)
+- [ ] Branch is up to date with `main`
+- [ ] Commit messages follow the conventional format
 - [ ] Run `npm run prepare` to ensure pre-commit hooks (linting and formatting) are installed
-- [ ] Issue is assigned to you before submitting a PR  
+- [ ] Issue is assigned to you before submitting a PR
 
 ---
 
 ## 💡 Important Notes
 
 ### 👥 Community Priority
+
 The Mozilla Campus Club of SLIIT welcomes contributions from everyone!  
 To ensure fair and collaborative participation, contributions follow this priority order:
 
-1. **Highest Priority:** Campus Club members  
-2. **Next Priority:** Verified Mozilla community members  
-3. **External Contributors:** You’re warmly welcome to contribute if no club or Mozilla member volunteers within **3 days** of the issue being opened or assigned  
+1. **Highest Priority:** Campus Club members
+2. **Next Priority:** Verified Mozilla community members
+3. **External Contributors:** You’re warmly welcome to contribute if no club or Mozilla member volunteers within **3 days** of the issue being opened or assigned
 
 > This policy applies to all repositories under the **Mozilla Campus Club of SLIIT** organization.
 
 ---
 
 ### ⚠️ Get Assigned Before Contributing
+
 Please comment on an open issue and wait to be assigned before submitting a PR.  
 This helps avoid duplicate work and ensures that your contribution can be reviewed efficiently.
 
 ---
 
 ### 🗂️ Duplicate or Unassigned PRs
+
 PRs opened without assignment or that duplicate existing work **might be closed or requested for revision**.  
 We appreciate your understanding and cooperation in keeping contributions organized.
 
