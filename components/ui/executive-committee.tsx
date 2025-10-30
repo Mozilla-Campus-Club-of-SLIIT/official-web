@@ -1,6 +1,7 @@
 import React from "react"
 import { ExecutiveCommitteeMember } from "@/data/executive-committee"
 import Image from "next/image"
+import { FaLinkedin } from "react-icons/fa" // 'fa' is for Font Awesome icons
 
 interface ExecutiveCommitteeProps {
   members: ExecutiveCommitteeMember[]
@@ -25,6 +26,17 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
               fill
               className="rounded-full object-cover"
             />
+            {president.linkedin && (
+              <a
+                href={president.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkedin-overlay"
+                aria-label={`View ${president.name}'s LinkedIn profile`}
+              >
+                <FaLinkedin className="linkedin-icon" />
+              </a>
+            )}
           </div>
           <h3 className="font-bold text-lg">{president.name}</h3>
           <p className="text-gray-600">{president.role}</p>
@@ -45,6 +57,17 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
                 fill
                 className="rounded-full object-cover"
               />
+              {member.linkedin && (
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="linkedin-overlay"
+                  aria-label={`View ${member.name}'s LinkedIn profile`}
+                >
+                  <FaLinkedin className="linkedin-icon" />
+                </a>
+              )}
             </div>
             <h3 className="font-bold text-lg">{member.name}</h3>
             <p className="text-gray-600">{member.role}</p>
@@ -66,6 +89,17 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
                 fill
                 className="rounded-full object-cover"
               />
+              {member.linkedin && (
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="linkedin-overlay"
+                  aria-label={`View ${member.name}'s LinkedIn profile`}
+                >
+                  <FaLinkedin className="linkedin-icon" />
+                </a>
+              )}
             </div>
             <h3 className="font-bold text-lg">{member.name}</h3>
             <p className="text-gray-600">{member.role}</p>

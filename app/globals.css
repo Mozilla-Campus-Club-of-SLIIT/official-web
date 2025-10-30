@@ -80,3 +80,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .linkedin-overlay {
+    @apply absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300;
+  }
+
+  .linkedin-icon {
+    @apply text-white text-2xl hover:text-blue-400;
+  }
+}
