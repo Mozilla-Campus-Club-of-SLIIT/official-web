@@ -70,14 +70,19 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 hover:bg-orange-50 hover:shadow-md cursor-pointer">
+            <a
+              href="https://certify.sliitmozilla.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 hover:bg-orange-50 hover:shadow-md cursor-pointer block"
+            >
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
-              <h3 className="text-orange-600 font-bold mb-2">Community</h3>
+              <h3 className="text-orange-600 font-bold mb-2">Awards and Prizes</h3>
               <p className="text-gray-600">
-                Engage with a supportive network of peers, mentors, and tech enthusiasts eager to
-                share knowledge.
+                Earn recognition through certificates and awards for your contributions and
+                achievements.
               </p>
-            </div>
+            </a>
 
             <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 hover:bg-orange-50 hover:shadow-md cursor-pointer">
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
