@@ -102,22 +102,39 @@ const blogPosts = [
     excerpt:
       "APIs power most of the apps we use every day, from logging in with Google to checking the weather or ordering food online. But for beginners, APIs can feel like a mysterious black box.",
     author: "Janitha Gamage",
-    date: "2025-10-01",
+    date: "2025-09-30",
     tags: ["API", "HTTPie", "Postman"],
     mediumUrl:
       "https://medium.com/@infosliitmcc/a-beginners-guide-to-mastering-apis-with-postman-and-httpie-6ba30d109491",
   },
+  {
+    id: "9",
+    title: "Practical DevOps Playbook for Deploying Academic Projects",
+    imageUrl: "/assets/blog9.png",
+    excerpt:
+      "University projects usually begin with tons of ideas and excitement. But as the deadline approaches, you may hear, ‘Wait, it only works on my laptop!, That’s where DevOps comes in.",
+    author: "Sadeesha Perera",
+    date: "2025-10-31",
+    tags: ["DevOps", "Continuous Integration", "Continuous Deployment"],
+    mediumUrl:
+      "https://medium.com/@infosliitmcc/practical-devops-playbook-for-deploying-academic-projects-1a2f569a05d1",
+  },
 ]
+
+// Sort blogs by date descending (recent first)
+const sortedBlogPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+)
 
 export default function Blog() {
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 6
-  const totalPages = Math.ceil(blogPosts.length / postsPerPage)
+  const totalPages = Math.ceil(sortedBlogPosts.length / postsPerPage)
 
   // Calculate the posts to display on current page
   const startIndex = (currentPage - 1) * postsPerPage
   const endIndex = startIndex + postsPerPage
-  const currentPosts = blogPosts.slice(startIndex, endIndex)
+  const currentPosts = sortedBlogPosts.slice(startIndex, endIndex)
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
