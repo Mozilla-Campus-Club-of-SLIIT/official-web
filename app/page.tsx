@@ -81,6 +81,15 @@ export default function Home() {
               <p className="text-gray-600">
                 Earn recognition through certificates and awards for your contributions and
                 achievements.
+                <br />
+                <a
+                  href="https://certify.sliitmozilla.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-500 underline font-semibold text-sm"
+                >
+                  Go to Certify Site
+                </a>
               </p>
             </a>
 
