@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Youtube, Mic, LucideIcon } from "lucide-react"
+import { webinars } from "@/data/webinar"
 
 type Event = {
   title: string
@@ -161,7 +162,7 @@ export default function Events() {
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        {/* <div className="mt-8 text-center">
           <a
             href="https://www.youtube.com/@sliitmozilla"
             target="_blank"
@@ -175,6 +176,55 @@ export default function Events() {
               →
             </span>
           </a>
+        </div> */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Webinar</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {webinars.map((webinar, index) => (
+              <Card
+                key={index}
+                className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                {webinar.Thumbnail && (
+                  <img
+                    src={webinar.Thumbnail}
+                    alt={webinar.title}
+                    className="w-full h-48 object-cover"
+                  />
+                )}
+                <CardHeader>
+                  <CardTitle className="text-orange-600 mb-2">{webinar.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">{webinar.description}</p>
+                  <div className="space-y-2 text-sm text-gray-500">
+                    <p className="flex items-center">
+                      <Mic className="mr-2 w-4 h-4" />
+                      Speaker: {webinar.speaker}
+                    </p>
+                    <p className="flex items-center">
+                      {webinar.type === "playlist" && webinar.videoCount && (
+                        <span className="flex items-center text-sm text-gray-500">
+                          <Youtube className="mr-2 w-4 h-4" />
+                          {webinar.videoCount} Videos
+                        </span>
+                      )}
+                    </p>
+                    {/* Render link manually since getEventLinkText expects specific logic/args */}
+                    <a
+                      href={webinar.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-primary hover:underline mt-2"
+                    >
+                      <ExternalLink className="mr-1 w-4 h-4" />
+                      {webinar.type === "playlist" ? "Watch Playlist" : "Watch Video"}
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
