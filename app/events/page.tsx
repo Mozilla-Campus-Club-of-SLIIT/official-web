@@ -120,8 +120,8 @@ export default function Events() {
         {/* Upcoming Events Section */}
         <h1 className="text-4xl font-bold text-center mb-12">Upcoming Events</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event, index) => (
-            <Card key={index}>
+          {events.map((event) => (
+            <Card key={event.title}>
               <CardHeader>
                 <CardTitle className="text-orange-600 mb-4">{event.title}</CardTitle>
                 <CardDescription>{event.date}</CardDescription>
@@ -143,8 +143,8 @@ export default function Events() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center mb-12">Past Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {pastEvents.map((pastEvent, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
+            {pastEvents.map((pastEvent) => (
+              <div key={pastEvent.title} className="bg-white rounded-lg shadow-sm overflow-hidden">
                 {/* Event Image */}
                 <img
                   src={pastEvent.image}
@@ -164,9 +164,9 @@ export default function Events() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center mb-12">Webinar</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {webinars.map((webinar, index) => (
+            {webinars.map((webinar) => (
               <Card
-                key={index}
+                key={webinar.title}
                 className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 {webinar.thumbnail && (
