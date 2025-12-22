@@ -169,9 +169,9 @@ export default function Events() {
                 key={index}
                 className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                {webinar.Thumbnail && (
+                {webinar.thumbnail && (
                   <img
-                    src={webinar.Thumbnail}
+                    src={webinar.thumbnail}
                     alt={webinar.title}
                     className="w-full h-48 object-cover"
                   />

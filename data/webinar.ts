@@ -1,17 +1,19 @@
+const getThumbnailUrl = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+
 export interface Webinar {
-  title: string;
-  Thumbnail: string;
-  description: string;
-  speaker: string;
-  videoCount: number;
-  link: string;
-  type: string;
+  title: string
+  thumbnail: string
+  description: string
+  speaker: string
+  videoCount: number
+  link: string
+  type: string
 }
 
 export const webinars: Webinar[] = [
   {
     title: "HashCode",
-    Thumbnail: "https://img.youtube.com/vi/XfDgDRafa9A/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("XfDgDRafa9A"),
     description:
       "Master the fundamentals of Google Hash Code and gain a strategic edge for your next programming competition.",
     speaker: "Uvindu Perera",
@@ -21,7 +23,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Learn and Earn",
-    Thumbnail: "https://img.youtube.com/vi/1xffza9FAO8/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("1xffza9FAO8"),
     description:
       "These quotes mean that hard work, generosity, and learning are key to success in life.",
     speaker: "Nadun Sandeepa",
@@ -31,7 +33,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Cyber Con",
-    Thumbnail: "https://img.youtube.com/vi/TiEEzKgc5c0/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("TiEEzKgc5c0"),
     description:
       "How to prevent hacking and data breaches by using strong security practices, awareness, and continuous learning in technology.",
     speaker: "Sithira Hewaarachchi",
@@ -41,7 +43,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Getting started with bootstrap",
-    Thumbnail: "https://img.youtube.com/vi/DF2AVprXvkg/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("DF2AVprXvkg"),
     description:
       "Learn the basics of Bootstrap and how to build simple, user-friendly web pages with great UX.",
     speaker: "Shehan Silva",
@@ -51,7 +53,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Introduction to Google Crowdsource",
-    Thumbnail: "https://img.youtube.com/vi/bDyJM38wVb0/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("bDyJM38wVb0"),
     description:
       "Crowdsource is a Google platform that lets users help improve Google services by training its algorithms.",
     speaker: "Geethmaka Dissanayake",
@@ -61,7 +63,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Introduction to Neuralink",
-    Thumbnail: "https://img.youtube.com/vi/GITeoLvZ70I/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("GITeoLvZ70I"),
     description:
       "Neuralink, founded by Elon Musk in San Francisco, develops implantable brain–machine interfaces for neurotechnology.",
     speaker: "Danuja Jayasuriya",
@@ -71,7 +73,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Building and Deploying RESTful API with Go",
-    Thumbnail: "https://img.youtube.com/vi/Gz4b2f7qwyg/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("Gz4b2f7qwyg"),
     description:
       "This video introduces Go, a statically typed programming language from Google, highlighting its syntax, concurrency features, and memory safety.",
     speaker: "Tharindu Balasooriya",
@@ -81,7 +83,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Getting started with WSL",
-    Thumbnail: "https://img.youtube.com/vi/FUczB6yMeP0/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("FUczB6yMeP0"),
     description:
       "This video shows how to install WSL2, set it up with popular tools, and access Windows files through Linux.",
     speaker: "Sanuja Methmal",
@@ -91,7 +93,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "AI Bot Technology",
-    Thumbnail: "https://img.youtube.com/vi/4MVQUVSGRRY/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("4MVQUVSGRRY"),
     description:
       "An AI chatbot (Artificial Intelligence chatbot) is a chatbot that's powered by artificial intelligence (AI).",
     speaker: "Shashika Kahatapitiya",
@@ -101,7 +103,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Emergence of Deepfake Technology",
-    Thumbnail: "https://img.youtube.com/vi/pJ9XbMcHiuA/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("pJ9XbMcHiuA"),
     description:
       "This video explains what deepfakes are, how deep learning is used to create them, and their real-world applications beyond fake videos.",
     speaker: "Pasindu Bandara",
@@ -111,7 +113,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Java Scripts",
-    Thumbnail: "https://img.youtube.com/vi/MbXFm2wfjLY/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("MbXFm2wfjLY"),
     description:
       "This video introduces JavaScript, covering its basics, syntax, and key features for building dynamic web applications.",
     speaker: "Chamathka Ariyarathna",
@@ -121,7 +123,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "New Technological Trends",
-    Thumbnail: "https://img.youtube.com/vi/LmdpDTDJbec/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("LmdpDTDJbec"),
     description:
       "This video explores how rapidly evolving technology and COVID-19 have changed the role of IT professionals in today’s contactless world.",
     speaker: "K.D. Divya",
@@ -131,7 +133,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Raspberry Pi for Computer Vision",
-    Thumbnail: "https://img.youtube.com/vi/tb4znRmig0U/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("tb4znRmig0U"),
     description:
       "This video introduces Raspberry Pi, a small single-board computer designed to teach computer science and enable practical projects.",
     speaker: "Saluka Udbhasa",
@@ -141,7 +143,7 @@ export const webinars: Webinar[] = [
   },
   {
     title: "Quick Guide to Quine",
-    Thumbnail: "https://img.youtube.com/vi/mNP35Ey35ZQ/maxresdefault.jpg",
+    thumbnail: getThumbnailUrl("mNP35Ey35ZQ"),
     description:
       "This video shows how to set up a Quine account and explore repositories quickly on this user-friendly platform.",
     speaker: "David Butler",
@@ -149,4 +151,4 @@ export const webinars: Webinar[] = [
     link: "https://www.youtube.com/watch?v=mNP35Ey35ZQ",
     type: "video",
   },
-];
+]
