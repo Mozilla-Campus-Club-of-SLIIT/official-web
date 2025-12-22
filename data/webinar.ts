@@ -1,11 +1,11 @@
 export interface Webinar {
-  title: string
-  Thumbnail: string
-  description: string
-  speaker: string
-  videoCount: number
-  link: string
-  type: string
+  title: string;
+  Thumbnail: string;
+  description: string;
+  speaker: string;
+  videoCount: number;
+  link: string;
+  type: string;
 }
 
 export const webinars: Webinar[] = [
@@ -60,7 +60,7 @@ export const webinars: Webinar[] = [
     type: "video",
   },
   {
-    title: "Introduction to Neuralink ",
+    title: "Introduction to Neuralink",
     Thumbnail: "https://img.youtube.com/vi/GITeoLvZ70I/maxresdefault.jpg",
     description:
       "Neuralink, founded by Elon Musk in San Francisco, develops implantable brain–machine interfaces for neurotechnology.",
@@ -79,9 +79,8 @@ export const webinars: Webinar[] = [
     link: "https://www.youtube.com/watch?v=Gz4b2f7qwyg&t=505s",
     type: "video",
   },
-
   {
-    title: "Getting started with WSL ",
+    title: "Getting started with WSL",
     Thumbnail: "https://img.youtube.com/vi/FUczB6yMeP0/maxresdefault.jpg",
     description:
       "This video shows how to install WSL2, set it up with popular tools, and access Windows files through Linux.",
@@ -145,9 +144,9 @@ export const webinars: Webinar[] = [
     Thumbnail: "https://img.youtube.com/vi/mNP35Ey35ZQ/maxresdefault.jpg",
     description:
       "This video shows how to set up a Quine account and explore repositories quickly on this user-friendly platform.",
-    speaker: "David Butler ",
+    speaker: "David Butler",
     videoCount: 0,
     link: "https://www.youtube.com/watch?v=mNP35Ey35ZQ",
     type: "video",
   },
-]
+];
