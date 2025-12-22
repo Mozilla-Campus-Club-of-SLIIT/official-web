@@ -104,7 +104,7 @@ export const webinars: Webinar[] = [
     title: "Emergence of Deepfake Technology",
     Thumbnail: "https://img.youtube.com/vi/pJ9XbMcHiuA/maxresdefault.jpg",
     description:
-      "This video introduces Bootstrap and shows how to create simple, user-friendly web pages using its components and layout system.",
+      "This video explains what deepfakes are, how deep learning is used to create them, and their real-world applications beyond fake videos.",
     speaker: "Pasindu Bandara",
     videoCount: 0,
     link: "https://www.youtube.com/watch?v=pJ9XbMcHiuA&list=PLkWgPcG-GFhBHAPwY9KLxo-6gUYRR2ItX&index=5",
