@@ -11,31 +11,45 @@ export interface Webinar {
   type: string
 }
 
+interface CreateWebinarOptions {
+  videoCount?: number
+  customLink?: string
+  index?: number
+  useSharedPlaylist?: boolean
+}
+
 const createWebinar = (
   title: string,
   videoId: string,
   description: string,
   speaker: string,
   type: "video" | "playlist",
-  videoCount: number = 0,
-  customLink?: string,
-  index?: number,
-  useSharedPlaylist: boolean = false,
-): Webinar => ({
-  title,
-  thumbnail: getThumbnailUrl(videoId),
-  description,
-  speaker,
-  videoCount,
-  type,
-  link:
-    customLink ||
-    (useSharedPlaylist || type === "playlist"
-      ? `https://www.youtube.com/watch?v=${videoId}&list=${SHARED_PLAYLIST_ID}${
-          Boolean(index) ? `&index=${index}` : ""
-        }`
-      : `https://www.youtube.com/watch?v=${videoId}`),
-})
+  options: CreateWebinarOptions = {},
+): Webinar => {
+  const { videoCount = 0, customLink, index, useSharedPlaylist = false } = options
+
+  let link = customLink
+  if (!link) {
+    if (useSharedPlaylist || type === "playlist") {
+      link = `https://www.youtube.com/watch?v=${videoId}&list=${SHARED_PLAYLIST_ID}`
+      if (index) {
+        link += `&index=${index}`
+      }
+    } else {
+      link = `https://www.youtube.com/watch?v=${videoId}`
+    }
+  }
+
+  return {
+    title,
+    thumbnail: getThumbnailUrl(videoId),
+    description,
+    speaker,
+    videoCount,
+    type,
+    link,
+  }
+}
 
 export const webinars: Webinar[] = [
   createWebinar(
@@ -44,8 +58,11 @@ export const webinars: Webinar[] = [
     "Master the fundamentals of Google Hash Code and gain a strategic edge for your next programming competition.",
     "Uvindu Perera",
     "playlist",
-    2,
-    "https://www.youtube.com/watch?v=XfDgDRafa9A&list=PLkWgPcG-GFhC5nuuifSjGzTlRlxYwArDv",
+    {
+      videoCount: 2,
+      customLink:
+        "https://www.youtube.com/watch?v=XfDgDRafa9A&list=PLkWgPcG-GFhC5nuuifSjGzTlRlxYwArDv",
+    },
   ),
   createWebinar(
     "Learn and Earn",
@@ -53,8 +70,11 @@ export const webinars: Webinar[] = [
     "These quotes mean that hard work, generosity, and learning are key to success in life.",
     "Nadun Sandeepa",
     "playlist",
-    2,
-    "https://www.youtube.com/watch?v=1xffza9FAO8&list=PLkWgPcG-GFhA2dobuzfv7I9C0goWJZ-We",
+    {
+      videoCount: 2,
+      customLink:
+        "https://www.youtube.com/watch?v=1xffza9FAO8&list=PLkWgPcG-GFhA2dobuzfv7I9C0goWJZ-We",
+    },
   ),
   createWebinar(
     "Cyber Con",
@@ -62,8 +82,10 @@ export const webinars: Webinar[] = [
     "How to prevent hacking and data breaches by using strong security practices, awareness, and continuous learning in technology.",
     "Sithira Hewaarachchi",
     "playlist",
-    3,
-    "https://www.youtube.com/playlist?list=PLkWgPcG-GFhD7F9fWJtQ5BgBhmOrixv5G",
+    {
+      videoCount: 3,
+      customLink: "https://www.youtube.com/playlist?list=PLkWgPcG-GFhD7F9fWJtQ5BgBhmOrixv5G",
+    },
   ),
   createWebinar(
     "Getting started with bootstrap",
@@ -71,8 +93,10 @@ export const webinars: Webinar[] = [
     "Learn the basics of Bootstrap and how to build simple, user-friendly web pages with great UX.",
     "Shehan Silva",
     "playlist",
-    3,
-    "https://www.youtube.com/playlist?list=PLkWgPcG-GFhBfp15nmhJRJYaPxuxg12Xz",
+    {
+      videoCount: 3,
+      customLink: "https://www.youtube.com/playlist?list=PLkWgPcG-GFhBfp15nmhJRJYaPxuxg12Xz",
+    },
   ),
   createWebinar(
     "Introduction to Google Crowdsource",
@@ -80,10 +104,7 @@ export const webinars: Webinar[] = [
     "Crowdsource is a Google platform that lets users help improve Google services by training its algorithms.",
     "Geethmaka Dissanayake",
     "video",
-    0,
-    undefined,
-    undefined,
-    true,
+    { useSharedPlaylist: true },
   ),
   createWebinar(
     "Introduction to Neuralink",
@@ -91,10 +112,7 @@ export const webinars: Webinar[] = [
     "Neuralink, founded by Elon Musk in San Francisco, develops implantable brain–machine interfaces for neurotechnology.",
     "Danuja Jayasuriya",
     "video",
-    0,
-    undefined,
-    2,
-    true,
+    { index: 2, useSharedPlaylist: true },
   ),
   createWebinar(
     "Building and Deploying RESTful API with Go",
@@ -102,8 +120,7 @@ export const webinars: Webinar[] = [
     "This video introduces Go, a statically typed programming language from Google, highlighting its syntax, concurrency features, and memory safety.",
     "Tharindu Balasooriya",
     "video",
-    0,
-    "https://www.youtube.com/watch?v=Gz4b2f7qwyg&t=505s",
+    { customLink: "https://www.youtube.com/watch?v=Gz4b2f7qwyg&t=505s" },
   ),
   createWebinar(
     "Getting started with WSL",
@@ -111,8 +128,10 @@ export const webinars: Webinar[] = [
     "This video shows how to install WSL2, set it up with popular tools, and access Windows files through Linux.",
     "Sanuja Methmal",
     "video",
-    0,
-    "https://www.youtube.com/watch?v=FUczB6yMeP0&list=PLkWgPcG-GFhC_3CLtupI4O4bvpNFWdBU2&index=2",
+    {
+      customLink:
+        "https://www.youtube.com/watch?v=FUczB6yMeP0&list=PLkWgPcG-GFhC_3CLtupI4O4bvpNFWdBU2&index=2",
+    },
   ),
   createWebinar(
     "AI Bot Technology",
@@ -120,10 +139,7 @@ export const webinars: Webinar[] = [
     "An AI chatbot (Artificial Intelligence chatbot) is a chatbot that's powered by artificial intelligence (AI).",
     "Shashika Kahatapitiya",
     "video",
-    0,
-    undefined,
-    4,
-    true,
+    { index: 4, useSharedPlaylist: true },
   ),
   createWebinar(
     "Emergence of Deepfake Technology",
@@ -131,10 +147,7 @@ export const webinars: Webinar[] = [
     "This video explains what deepfakes are, how deep learning is used to create them, and their real-world applications beyond fake videos.",
     "Pasindu Bandara",
     "video",
-    0,
-    undefined,
-    5,
-    true,
+    { index: 5, useSharedPlaylist: true },
   ),
   createWebinar(
     "Java Scripts",
@@ -142,10 +155,7 @@ export const webinars: Webinar[] = [
     "This video introduces JavaScript, covering its basics, syntax, and key features for building dynamic web applications.",
     "Chamathka Ariyarathna",
     "video",
-    0,
-    undefined,
-    6,
-    true,
+    { index: 6, useSharedPlaylist: true },
   ),
   createWebinar(
     "New Technological Trends",
@@ -153,10 +163,7 @@ export const webinars: Webinar[] = [
     "This video explores how rapidly evolving technology and COVID-19 have changed the role of IT professionals in today’s contactless world.",
     "K.D. Divya",
     "video",
-    0,
-    undefined,
-    7,
-    true,
+    { index: 7, useSharedPlaylist: true },
   ),
   createWebinar(
     "Raspberry Pi for Computer Vision",

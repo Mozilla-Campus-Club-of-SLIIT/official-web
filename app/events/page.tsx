@@ -187,7 +187,7 @@ export default function Events() {
                       Speaker: {webinar.speaker}
                     </p>
                     <p className="flex items-center">
-                      {webinar.type === "playlist" && webinar.videoCount && (
+                      {webinar.type === "playlist" && webinar.videoCount > 0 && (
                         <span className="flex items-center text-sm text-gray-500">
                           <Youtube className="mr-2 w-4 h-4" />
                           {webinar.videoCount} Videos
