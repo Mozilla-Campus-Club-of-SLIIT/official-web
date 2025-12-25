@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Youtube, Mic, LucideIcon } from "lucide-react"
-import { webinars } from "@/data/webinar"
+import { webinars, liveWebinars } from "@/data/webinar"
 
 type Event = {
   title: string
@@ -56,40 +56,12 @@ const events: Partial<Event>[] = [
 // past events data
 const pastEvents: Partial<Event>[] = [
   {
-    title: "Inroduction to OWASP Top 10",
-    image: "/assets/OWASPTop10.png",
-    url: "https://www.youtube.com/live/2xSr_IZGrFk?si=bUST_M5IuJa9xt9w",
-    description:
-      "The 1st live tech session conducted by Heshan Kariyawasam.Learn about the most critical web application vulnerabilities and how to protect your applications! A deep dive into the OWASP Top 10, strengthening your security knowledge and helping you build safer applications. Organized by the Mozilla Campus Club of SLIIT.",
-  },
-  {
     title: "Bashaway 2024",
     image: "/assets/bashaway.jpg",
     url: "https://www.facebook.com/share/p/1BGnzvHnXn/?mibextid=oFDknk",
     urlLabel: "Check out the gallery!",
     description:
       "The 3rd iteration of Bashaway, an Inter-University Scripting competition organized by the SLIIT FOSS Community in collaboration with Mozilla Campus Club of SLIIT, SLIIT Women in FOSS, and Software Engineering Student Community was held in October 2024.",
-  },
-  {
-    title: "Intro to Assembly Programming",
-    image: "/assets/3.png",
-    url: "https://www.youtube.com/watch?v=p3pAHNgymXA",
-    description:
-      "The 3rd live tech session conducted by Seniru Pasan. Dive into the world of low-level programming! Exploring the fundamentals that power your devices, demystifying how software speaks to hardware.",
-  },
-  {
-    title: "Utilizing AntDesign for quick UI Development",
-    image: "/assets/2.png",
-    url: "https://www.youtube.com/watch?v=qfFaOkHoRVM",
-    description:
-      "The 2nd live tech session conducted by Russell Peiris. A session focusing on frontend and building clean and neat UIs",
-  },
-  {
-    title: "Intro to Swift & SwiftUI",
-    image: "/assets/1.png",
-    url: "https://www.youtube.com/watch?v=QZinHA1r4w0",
-    description:
-      "The 1st live tech session conducted by Nowen Kottage. Dive into iOS Development with the Introduction to Swift & SwiftUI: A sneak peek into UIKit!",
   },
 ]
 
@@ -161,8 +133,50 @@ export default function Events() {
             ))}
           </div>
         </div>
+
+        {/* Webinar Section */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center mb-12">Webinar</h2>
+          {/* Past Webinars (Formerly Past Events) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {liveWebinars.map((webinar) => (
+              <Card
+                key={webinar.title}
+                className="overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                {webinar.thumbnail && (
+                  <img
+                    src={webinar.thumbnail}
+                    alt={webinar.title}
+                    className="w-full h-48 object-cover"
+                  />
+                )}
+                <CardHeader>
+                  <CardTitle className="text-orange-600 mb-2">{webinar.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">{webinar.description}</p>
+                  <div className="space-y-2 text-sm text-gray-500">
+                    <p className="flex items-center">
+                      <Mic className="mr-2 w-4 h-4" />
+                      Speaker: {webinar.speaker}
+                    </p>
+                    <a
+                      href={webinar.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-primary hover:underline mt-2"
+                    >
+                      <ExternalLink className="mr-1 w-4 h-4" />
+                      Watch Video
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Current Webinars */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {webinars.map((webinar) => (
               <Card
@@ -186,15 +200,14 @@ export default function Events() {
                       <Mic className="mr-2 w-4 h-4" />
                       Speaker: {webinar.speaker}
                     </p>
-                    <p className="flex items-center">
-                      {webinar.type === "playlist" && webinar.videoCount > 0 && (
+                    {webinar.type === "playlist" && webinar.videoCount > 0 && (
+                      <p className="flex items-center">
                         <span className="flex items-center text-sm text-gray-500">
                           <Youtube className="mr-2 w-4 h-4" />
                           {webinar.videoCount} Videos
                         </span>
-                      )}
-                    </p>
-                    {/* Render link manually since getEventLinkText expects specific logic/args */}
+                      </p>
+                    )}
                     <a
                       href={webinar.link}
                       target="_blank"

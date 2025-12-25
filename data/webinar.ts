@@ -180,3 +180,46 @@ export const webinars: Webinar[] = [
     "video",
   ),
 ]
+
+export const liveWebinars: Webinar[] = [
+  {
+    title: "Inroduction to OWASP Top 10",
+    thumbnail: "/assets/OWASPTop10.png",
+    link: "https://www.youtube.com/live/2xSr_IZGrFk?si=bUST_M5IuJa9xt9w",
+    description:
+      "The 1st live tech session conducted by Heshan Kariyawasam.Learn about the most critical web application vulnerabilities and how to protect your applications! A deep dive into the OWASP Top 10, strengthening your security knowledge and helping you build safer applications. Organized by the Mozilla Campus Club of SLIIT.",
+    speaker: "Heshan Kariyawasam",
+    type: "video",
+    videoCount: 0,
+  },
+  {
+    title: "Intro to Assembly Programming",
+    thumbnail: "/assets/3.png",
+    link: "https://www.youtube.com/watch?v=p3pAHNgymXA",
+    description:
+      "The 3rd live tech session conducted by Seniru Pasan. Dive into the world of low-level programming! Exploring the fundamentals that power your devices, demystifying how software speaks to hardware.",
+    speaker: "Seniru Pasan",
+    type: "video",
+    videoCount: 0,
+  },
+  {
+    title: "Utilizing AntDesign for quick UI Development",
+    thumbnail: "/assets/2.png",
+    link: "https://www.youtube.com/watch?v=qfFaOkHoRVM",
+    description:
+      "The 2nd live tech session conducted by Russell Peiris. A session focusing on frontend and building clean and neat UIs",
+    speaker: "Russell Peiris",
+    type: "video",
+    videoCount: 0,
+  },
+  {
+    title: "Intro to Swift & SwiftUI",
+    thumbnail: "/assets/1.png",
+    link: "https://www.youtube.com/watch?v=QZinHA1r4w0",
+    description:
+      "The 1st live tech session conducted by Nowen Kottage. Dive into iOS Development with the Introduction to Swift & SwiftUI: A sneak peek into UIKit!",
+    speaker: "Nowen Kottage",
+    type: "video",
+    videoCount: 0,
+  },
+]
