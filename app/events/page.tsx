@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Youtube, Mic, LucideIcon } from "lucide-react"
+import { webinars, liveWebinars } from "@/data/webinar"
 
 type Event = {
   title: string
@@ -12,6 +13,18 @@ type Event = {
   urlLabel: string
   urlIcon: LucideIcon
   description: string
+}
+
+type WebinarCardProps = {
+  webinar: {
+    title: string
+    thumbnail?: string
+    description: string
+    speaker: string
+    link: string
+    type?: string
+    videoCount?: number
+  }
 }
 
 // upcoming events
@@ -42,14 +55,13 @@ const events: Partial<Event>[] = [
       "Hola Mozilla is the Orientation program for the Mozilla Campus Club of SLIIT. This event is specially focused on the new members of the club to get to know about the club and its activities.",
     location: "TBD",
     time: "TBD",
-  },
-  /*{
+  } /*{
     title: "Tech Talk: Future of Web",
     date: "July 15, 2025",
     description: "Industry experts discuss the future of web technologies",
     location: "SLIIT - Conference Hall",
     time: "2:00 PM - 4:00 PM",
-  },*/
+  },*/,
 ]
 
 // past events data
@@ -63,13 +75,6 @@ const pastEvents: Partial<Event>[] = [
       "The event, organized in collaboration with Cloud Native Sri Lanka, highlighted Mozilla’s legacy and vision in open technology. The program also featured an informative DevSecOps 101 session, an engaging interactive quiz with exciting giveaways, and a preview of Mozilla's upcoming initiatives, providing valuable insights into the evolving landscape of open-source innovation and community-driven development.",
   },
   {
-    title: "Inroduction to OWASP Top 10",
-    image: "/assets/OWASPTop10.png",
-    url: "https://www.youtube.com/live/2xSr_IZGrFk?si=bUST_M5IuJa9xt9w",
-    description:
-      "The 1st live tech session conducted by Heshan Kariyawasam.Learn about the most critical web application vulnerabilities and how to protect your applications! A deep dive into the OWASP Top 10, strengthening your security knowledge and helping you build safer applications. Organized by the Mozilla Campus Club of SLIIT.",
-  },
-  {
     title: "Bashaway 2024",
     image: "/assets/bashaway.jpg",
     url: "https://www.facebook.com/share/p/1BGnzvHnXn/?mibextid=oFDknk",
@@ -77,58 +82,87 @@ const pastEvents: Partial<Event>[] = [
     description:
       "The 3rd iteration of Bashaway, an Inter-University Scripting competition organized by the SLIIT FOSS Community in collaboration with Mozilla Campus Club of SLIIT, SLIIT Women in FOSS, and Software Engineering Student Community was held in October 2024.",
   },
-  {
-    title: "Intro to Assembly Programming",
-    image: "/assets/3.png",
-    url: "https://www.youtube.com/watch?v=p3pAHNgymXA",
-    description:
-      "The 3rd live tech session conducted by Seniru Pasan. Dive into the world of low-level programming! Exploring the fundamentals that power your devices, demystifying how software speaks to hardware.",
-  },
-  {
-    title: "Utilizing AntDesign for quick UI Development",
-    image: "/assets/2.png",
-    url: "https://www.youtube.com/watch?v=qfFaOkHoRVM",
-    description:
-      "The 2nd live tech session conducted by Russell Peiris. A session focusing on frontend and building clean and neat UIs",
-  },
-  {
-    title: "Intro to Swift & SwiftUI",
-    image: "/assets/1.png",
-    url: "https://www.youtube.com/watch?v=QZinHA1r4w0",
-    description:
-      "The 1st live tech session conducted by Nowen Kottage. Dive into iOS Development with the Introduction to Swift & SwiftUI: A sneak peek into UIKit!",
-  },
 ]
 
+// Extracted component for event links
+function EventLink({
+  url,
+  label,
+  UrlIcon,
+}: {
+  url?: string
+  label?: string
+  UrlIcon?: LucideIcon
+}) {
+  if (!url) return null
+
+  const icon = UrlIcon ? (
+    <UrlIcon className="mr-1 w-4 h-4" />
+  ) : url.includes("youtube.com") ? (
+    <Youtube className="mr-1 w-4 h-4" />
+  ) : (
+    <ExternalLink className="mr-1 w-4 h-4" />
+  )
+
+  const labelText = label || (url.includes("youtube.com") ? "Watch the session!" : "Check out!")
+
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center mt-3">
+      {icon}
+      {labelText}
+    </a>
+  )
+}
+
+// Extracted component for webinar cards
+function WebinarCard({ webinar }: WebinarCardProps) {
+  return (
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+      {webinar.thumbnail && (
+        <img src={webinar.thumbnail} alt={webinar.title} className="w-full h-48 object-cover" />
+      )}
+      <CardHeader>
+        <CardTitle className="text-orange-600 mb-2">{webinar.title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-600 mb-4">{webinar.description}</p>
+        <div className="space-y-2 text-sm text-gray-500">
+          <p className="flex items-center">
+            <Mic className="mr-2 w-4 h-4" />
+            Speaker: {webinar.speaker}
+          </p>
+          {webinar.type === "playlist" && webinar.videoCount && webinar.videoCount > 0 && (
+            <p className="flex items-center">
+              <span className="flex items-center text-sm text-gray-500">
+                <Youtube className="mr-2 w-4 h-4" />
+                {webinar.videoCount} Videos
+              </span>
+            </p>
+          )}
+          <a
+            href={webinar.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-primary hover:underline mt-2"
+          >
+            <ExternalLink className="mr-1 w-4 h-4" />
+            {webinar.type === "playlist" ? "Watch Playlist" : "Watch Video"}
+          </a>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function Events() {
-  const getEventLinkText = (url?: string, label?: string, UrlIcon?: LucideIcon) => {
-    if (!url) return null
-    const icon = UrlIcon ? (
-      <UrlIcon className="mr-1 w-4 h-4" />
-    ) : url.includes("youtube.com") ? (
-      <Youtube className="mr-1 w-4 h-4" />
-    ) : (
-      <ExternalLink className="mr-1 w-4 h-4" />
-    )
-
-    const labelText = label || (url.includes("youtube.com") ? "Watch the session!" : "Check out!")
-
-    return (
-      <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center mt-3">
-        {icon}
-        {labelText}
-      </a>
-    )
-  }
-
   return (
     <div className="py-12">
       <div className="container mx-auto px-4">
         {/* Upcoming Events Section */}
         <h1 className="text-4xl font-bold text-center mb-12">Upcoming Events</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event, index) => (
-            <Card key={index}>
+          {events.map((event) => (
+            <Card key={event.title}>
               <CardHeader>
                 <CardTitle className="text-orange-600 mb-4">{event.title}</CardTitle>
                 <CardDescription>{event.date}</CardDescription>
@@ -138,9 +172,8 @@ export default function Events() {
                 <div className="space-y-2 text-sm text-gray-500">
                   <p>📍 {event.location}</p>
                   <p>🕒 {event.time}</p>
-                  {getEventLinkText(event.url, event.urlLabel, event.urlIcon)}
+                  <EventLink url={event.url} label={event.urlLabel} UrlIcon={event.urlIcon} />
                 </div>
-                {/* <Button className="w-full mt-4">Register Now!</Button> */}
               </CardContent>
             </Card>
           ))}
@@ -150,39 +183,43 @@ export default function Events() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center mb-12">Past Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {pastEvents.map((pastEvent, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                {/* Event Image */}
+            {pastEvents.map((pastEvent) => (
+              <div key={pastEvent.title} className="bg-white rounded-lg shadow-sm overflow-hidden">
                 <img
                   src={pastEvent.image}
                   alt={pastEvent.title}
                   className="w-full h-48 object-cover"
                 />
-                {/* Event Content */}
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-orange-600">{pastEvent.title}</h3>
                   <p className="text-gray-600">{pastEvent.description}</p>
-                  {getEventLinkText(pastEvent.url, pastEvent.urlLabel, pastEvent.urlIcon)}
+                  <EventLink
+                    url={pastEvent.url}
+                    label={pastEvent.urlLabel}
+                    UrlIcon={pastEvent.urlIcon}
+                  />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <a
-            href="https://www.youtube.com/@sliitmozilla"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative inline-block font-medium text-primary group no-underline 
-                 after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-[1px] after:bg-current 
-                 after:w-0 after:transition-[width] after:duration-300 hover:after:w-full"
-          >
-            Check out our past live sessions on YouTube!
-            <span className="inline-block ml-2 transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
-          </a>
+        {/* Webinar Section */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold text-center mb-12">Webinar</h2>
+          {/* Past Webinars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {liveWebinars.map((webinar) => (
+              <WebinarCard key={webinar.title} webinar={webinar} />
+            ))}
+          </div>
+
+          {/* Current Webinars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {webinars.map((webinar) => (
+              <WebinarCard key={webinar.title} webinar={webinar} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
