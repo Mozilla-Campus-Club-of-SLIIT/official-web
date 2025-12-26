@@ -43,6 +43,9 @@ export function Navbar() {
 
         {/* --- Desktop Nav Links --- */}
         <div className="hidden md:flex items-center space-x-6">
+          <NavLink href="/" active={isActive("/")}>
+            Home
+          </NavLink>
           <NavLink href="/about" active={isActive("/about")}>
             About
           </NavLink>
@@ -96,6 +99,9 @@ export function Navbar() {
         `}
       >
         <div className="flex flex-col space-y-4 text-left">
+          <NavLinkMobile href="/" active={isActive("/")} closeMenu={toggleMenu}>
+            Home
+          </NavLinkMobile>
           <NavLinkMobile href="/about" active={isActive("/about")} closeMenu={toggleMenu}>
             About
           </NavLinkMobile>
