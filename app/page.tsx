@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { MovingBanner } from "@/components/ui/moving-banner"
 import SenderInit from "@/components/ui/sender-init"
-import { Code2, Users, Rocket, Brain } from "lucide-react"
+import { Code2, Users, Rocket, Brain, ExternalLink } from "lucide-react"
 
 export default function Home() {
   const senderFormId = process.env.NEXT_PUBLIC_SENDER_FORM_ID
@@ -72,11 +72,20 @@ export default function Home() {
 
             <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 hover:bg-orange-50 hover:shadow-md cursor-pointer">
               <span className="text-orange-600 text-2xl block text-left mb-2">⁕</span>
-              <h3 className="text-orange-600 font-bold mb-2">Community</h3>
+              <h3 className="text-orange-600 font-bold mb-2">Awards and Prizes</h3>
               <p className="text-gray-600">
-                Engage with a supportive network of peers, mentors, and tech enthusiasts eager to
-                share knowledge.
+                Earn recognition through certificates and awards for your contributions and
+                achievements.
               </p>
+              <a
+                href="https://certify.sliitmozilla.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-500 underline font-semibold text-sm inline-flex items-center gap-1 mt-3"
+              >
+                Go to Certify Site
+                <ExternalLink className="h-3 w-3" />
+              </a>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm transition-all duration-300 hover:bg-orange-50 hover:shadow-md cursor-pointer">

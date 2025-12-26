@@ -67,6 +67,14 @@ const events: Partial<Event>[] = [
 // past events data
 const pastEvents: Partial<Event>[] = [
   {
+    title: "Holamozilla 2025",
+    image: "/assets/Holamozilla2025.png",
+    url: "https://hola.sliitmozilla.org",
+    urlLabel: "Visit Web",
+    description:
+      "The event, organized in collaboration with Cloud Native Sri Lanka, highlighted Mozilla’s legacy and vision in open technology. The program also featured an informative DevSecOps 101 session, an engaging interactive quiz with exciting giveaways, and a preview of Mozilla's upcoming initiatives, providing valuable insights into the evolving landscape of open-source innovation and community-driven development.",
+  },
+  {
     title: "Bashaway 2024",
     image: "/assets/bashaway.jpg",
     url: "https://www.facebook.com/share/p/1BGnzvHnXn/?mibextid=oFDknk",
