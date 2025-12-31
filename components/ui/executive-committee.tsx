@@ -1,7 +1,7 @@
 import React from "react"
 import { ExecutiveCommitteeMember } from "@/data/executive-committee"
 import Image from "next/image"
-import { FaLinkedin } from "react-icons/fa" // 'fa' is for Font Awesome icons
+import { Linkedin } from "lucide-react"
 
 interface ExecutiveCommitteeProps {
   members: ExecutiveCommitteeMember[]
@@ -34,7 +34,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
                 className="linkedin-overlay"
                 aria-label={`View ${president.name}'s LinkedIn profile`}
               >
-                <FaLinkedin className="linkedin-icon" />
+                <Linkedin className="linkedin-icon" />
               </a>
             )}
           </div>
@@ -65,7 +65,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
                   className="linkedin-overlay"
                   aria-label={`View ${member.name}'s LinkedIn profile`}
                 >
-                  <FaLinkedin className="linkedin-icon" />
+                  <Linkedin className="linkedin-icon" />
                 </a>
               )}
             </div>
@@ -97,7 +97,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
                   className="linkedin-overlay"
                   aria-label={`View ${member.name}'s LinkedIn profile`}
                 >
-                  <FaLinkedin className="linkedin-icon" />
+                  <Linkedin className="linkedin-icon" />
                 </a>
               )}
             </div>
