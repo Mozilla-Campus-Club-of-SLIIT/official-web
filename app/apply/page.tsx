@@ -32,7 +32,18 @@ interface FieldErrors {
 }
 
 const preferredTeamOptions = ["Dev", "Design", "Editorial", "TV", "Other"] as const
-const skillOptions = ["Software Development", "UI/UX", "Graphic Design", "Video Editing", "Social Media Management", "Content Writing", "Photography", "Event Moderation", "General Logistics", "Project Management"] as const
+const skillOptions = [
+  "Software Development",
+  "UI/UX",
+  "Graphic Design",
+  "Video Editing",
+  "Social Media Management",
+  "Content Writing",
+  "Photography",
+  "Event Moderation",
+  "General Logistics",
+  "Project Management",
+] as const
 
 export default function JoinUsPage() {
   const [fullName, setFullName] = useState("")
@@ -129,13 +140,13 @@ export default function JoinUsPage() {
   }
 
   const onSkillChange = (skill: string) => {
-    setSkills(prev => {
-      const updated = prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]
+    setSkills((prev) => {
+      const updated = prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
       if (updated.length > 0) {
         setErrors((errs) => ({ ...errs, skills: undefined }))
       }
       return updated
-    }) 
+    })
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -787,14 +798,17 @@ export default function JoinUsPage() {
         {/* Skills */}
         <div>
           <fieldset
-            className={`border rounded p-3 ${errors.skills && touched.skills  ? "border-red-500" : "border-gray-300"}`}
+            className={`border rounded p-3 ${errors.skills && touched.skills ? "border-red-500" : "border-gray-300"}`}
           >
             <legend className="text-sm font-medium">Select Your Skills *</legend>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-              {skillOptions.map(skill => {
+              {skillOptions.map((skill) => {
                 const checked = skills.includes(skill)
                 return (
-                  <label key={skill} className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                  <label
+                    key={skill}
+                    className="flex items-center gap-2 text-sm cursor-pointer select-none"
+                  >
                     <input
                       type="checkbox"
                       value={skill}
