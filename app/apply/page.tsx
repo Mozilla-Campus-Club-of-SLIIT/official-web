@@ -28,9 +28,11 @@ interface FieldErrors {
   github?: string
   reason?: string
   preferredTeam?: string
+  skills?: string
 }
 
 const preferredTeamOptions = ["Dev", "Design", "Editorial", "TV", "Other"] as const
+const skillOptions = ["Software Development", "UI/UX", "Graphic Design", "Video Editing", "Social Media Management", "Content Writing", "Photography", "Event Moderation", "General Logistics", "Project Management"] as const
 
 export default function JoinUsPage() {
   const [fullName, setFullName] = useState("")
@@ -46,6 +48,7 @@ export default function JoinUsPage() {
   const [reason, setReason] = useState("")
   const [otherClubs, setOtherClubs] = useState("")
   const [preferredTeams, setPreferredTeams] = useState<string[]>([])
+  const [skills, setSkills] = useState<string[]>([])
 
   const [errors, setErrors] = useState<FieldErrors>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
@@ -88,6 +91,10 @@ export default function JoinUsPage() {
       nextErrors.preferredTeam = "Select at least one team"
     }
 
+    if (!skills || skills.length === 0) {
+      nextErrors.skills = "Select at least one skill"
+    }
+
     return nextErrors
   }, [
     fullName,
@@ -102,6 +109,7 @@ export default function JoinUsPage() {
     github,
     reason,
     preferredTeams,
+    skills,
   ])
 
   const runValidationAndSet = () => {
@@ -120,6 +128,16 @@ export default function JoinUsPage() {
     })
   }
 
+  const onSkillChange = (skill: string) => {
+    setSkills(prev => {
+      const updated = prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]
+      if (updated.length > 0) {
+        setErrors((errs) => ({ ...errs, skills: undefined }))
+      }
+      return updated
+    }) 
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     ;[
@@ -135,6 +153,7 @@ export default function JoinUsPage() {
       "github",
       "reason",
       "preferredTeam",
+      "skills",
     ].forEach(setFieldTouched)
     const validation = runValidationAndSet()
     if (Object.keys(validation).length > 0) {
@@ -161,6 +180,7 @@ export default function JoinUsPage() {
       reason: reason.trim(),
       otherClubs: otherClubs.trim() || "None",
       preferredTeam: preferredTeams.join(", "),
+      skills: skills.join(", "),
     }
 
     try {
@@ -761,6 +781,39 @@ export default function JoinUsPage() {
           </fieldset>
           {errors.preferredTeam && touched.preferredTeam && (
             <p className="mt-1 text-xs text-red-600">{errors.preferredTeam}</p>
+          )}
+        </div>
+
+        {/* Skills */}
+        <div>
+          <fieldset
+            className={`border rounded p-3 ${errors.skills && touched.skills  ? "border-red-500" : "border-gray-300"}`}
+          >
+            <legend className="text-sm font-medium">Select Your Skills *</legend>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+              {skillOptions.map(skill => {
+                const checked = skills.includes(skill)
+                return (
+                  <label key={skill} className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      value={skill}
+                      checked={checked}
+                      onChange={() => {
+                        onSkillChange(skill)
+                        setFieldTouched("skills")
+                        setErrors(validate())
+                      }}
+                      style={{ accentColor: "#EA7B2C" }}
+                    />
+                    <span>{skill}</span>
+                  </label>
+                )
+              })}
+            </div>
+          </fieldset>
+          {errors.skills && touched.skills && (
+            <p className="mt-1 text-xs text-red-600">{errors.skills}</p>
           )}
         </div>
 
