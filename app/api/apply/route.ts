@@ -49,6 +49,7 @@ type ApplicationData = {
   reason: string
   otherClubs?: string
   preferredTeam?: string
+  skills?: string
 }
 
 export async function POST(req: NextRequest) {
@@ -79,6 +80,7 @@ export async function POST(req: NextRequest) {
       reason,
       otherClubs,
       preferredTeam,
+      skills,
     } = body
 
     // Field validation
@@ -138,6 +140,7 @@ export async function POST(req: NextRequest) {
       reason,
       otherClubs,
       preferredTeam,
+      skills,
       "Pending",
     ]
 
