@@ -66,14 +66,16 @@ const events: Partial<Event>[] = [
 
 // past events data
 const pastEvents: Partial<Event>[] = [
-  {    title: "Bashaway 2025",
+  {
+    title: "Bashaway 2025",
     image: "/assets/bashaway2025.jpg",
     url: "https://www.facebook.com/media/set?vanity=sliit.fcmu&set=a.1263471812493396",
     urlLabel: "Check out the gallery!",
     description:
       "The 4th iteration of Bashaway, an Inter-University Scripting competition organized by the SLIIT FOSS Community in collaboration with Mozilla Campus Club of SLIIT, SLIIT Women in FOSS, and Software Engineering Student Community was held in December 2025.",
   },
-  {    title: "Holamozilla 2025",
+  {
+    title: "Holamozilla 2025",
     image: "/assets/Holamozilla2025.png",
     url: "https://hola.sliitmozilla.org",
     urlLabel: "Visit Web",
