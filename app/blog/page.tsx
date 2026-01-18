@@ -24,7 +24,7 @@ const blogPosts = [
     date: "2024-07-17",
     tags: ["Tech", "Java"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/java-and-its-benefits-compared-to-other-programming-languages-e51f9b93e7ec",
+      "https://medium.com/@sliitmozilla/java-and-its-benefits-compared-to-other-programming-languages-e51f9b93e7ec",
   },
   {
     id: "2",
@@ -35,7 +35,7 @@ const blogPosts = [
     date: "2024-07-17",
     tags: ["Cybersecurity", "Cyberwarfare"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/cyberwarfare-how-does-it-impact-everyday-life-b5692a7cf6cd",
+      "https://medium.com/@sliitmozilla/cyberwarfare-how-does-it-impact-everyday-life-b5692a7cf6cd",
   },
   {
     id: "3",
@@ -45,7 +45,7 @@ const blogPosts = [
     author: "Hinesha Perera",
     date: "2024-07-17",
     tags: ["Linux", "Virtualization", "Hyper-V"],
-    mediumUrl: "https://medium.com/@infosliitmcc/virtualization-and-linux-d9da8da84407",
+    mediumUrl: "https://medium.com/@sliitmozilla/virtualization-and-linux-d9da8da84407",
   },
   {
     id: "4",
@@ -57,7 +57,7 @@ const blogPosts = [
     date: "2024-07-17",
     tags: ["Git", "Version Controlling", "GitHub"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/introduction-to-git-understanding-the-basics-0ee3955c87e1",
+      "https://medium.com/@sliitmozilla/introduction-to-git-understanding-the-basics-0ee3955c87e1",
   },
   {
     id: "5",
@@ -69,7 +69,7 @@ const blogPosts = [
     date: "2024-07-17",
     tags: ["Cloud", "Security", "Cloud Security"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/cloud-security-best-practices-for-protecting-your-data-11f0ad7bea3c",
+      "https://medium.com/@sliitmozilla/cloud-security-best-practices-for-protecting-your-data-11f0ad7bea3c",
   },
   {
     id: "6",
@@ -81,7 +81,7 @@ const blogPosts = [
     date: "2024-07-17",
     tags: ["AI", "Artificial Intelligence", "AI Applications"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/understanding-the-prevailing-ai-applications-1c50b25d0c61",
+      "https://medium.com/@sliitmozilla/understanding-the-prevailing-ai-applications-1c50b25d0c61",
   },
   {
     id: "7",
@@ -93,7 +93,7 @@ const blogPosts = [
     date: "2025-08-28",
     tags: ["Cybersecurity", "Cyber Threats"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/top-5-cyber-threats-every-university-student-should-know-ccd74a9773ac",
+      "https://medium.com/@sliitmozilla/top-5-cyber-threats-every-university-student-should-know-ccd74a9773ac",
   },
   {
     id: "8",
@@ -105,7 +105,7 @@ const blogPosts = [
     date: "2025-09-30",
     tags: ["API", "HTTPie", "Postman"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/a-beginners-guide-to-mastering-apis-with-postman-and-httpie-6ba30d109491",
+      "https://medium.com/@sliitmozilla/a-beginners-guide-to-mastering-apis-with-postman-and-httpie-6ba30d109491",
   },
   {
     id: "9",
@@ -117,7 +117,7 @@ const blogPosts = [
     date: "2025-10-31",
     tags: ["DevOps", "Continuous Integration", "Continuous Deployment"],
     mediumUrl:
-      "https://medium.com/@infosliitmcc/practical-devops-playbook-for-deploying-academic-projects-1a2f569a05d1",
+      "https://medium.com/@sliitmozilla/practical-devops-playbook-for-deploying-academic-projects-1a2f569a05d1",
   },
 ]
 
@@ -232,7 +232,7 @@ export default function Blog() {
 
         <div className="mt-8 text-center">
           <a
-            href="https://medium.com/@infosliitmcc"
+            href="https://medium.com/@sliitmozilla"
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-block font-medium text-primary group no-underline 
