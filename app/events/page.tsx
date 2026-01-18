@@ -190,11 +190,11 @@ export default function Events() {
           <h2 className="text-3xl font-bold text-center mb-12">Past Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {pastEvents.map((pastEvent) => (
-              <div key={pastEvent.title} className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div key={pastEvent.title} className={`bg-white rounded-lg shadow-sm overflow-hidden ${pastEvent.title === "Bashaway 2025" ? "md:col-span-1" : ""}`}>
                 <img
                   src={pastEvent.image}
                   alt={pastEvent.title}
-                  className="w-full h-48 object-cover"
+                  className={`w-full h-48 object-cover ${pastEvent.title === "Bashaway 2025" ? "h-56" : ""}`}
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-orange-600">{pastEvent.title}</h3>
