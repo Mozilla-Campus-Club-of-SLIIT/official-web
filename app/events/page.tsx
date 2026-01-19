@@ -66,14 +66,16 @@ const events: Partial<Event>[] = [
 
 // past events data
 const pastEvents: Partial<Event>[] = [
-  {    title: "Bashaway 2025",
+  {
+    title: "Bashaway 2025",
     image: "/assets/bashaway2025.jpg",
     url: "https://www.facebook.com/media/set?vanity=sliit.fcmu&set=a.1263471812493396",
     urlLabel: "Check out the gallery!",
     description:
       "The 4th iteration of Bashaway, an Inter-University Scripting competition organized by the SLIIT FOSS Community in collaboration with Mozilla Campus Club of SLIIT, SLIIT Women in FOSS, and Software Engineering Student Community was held in December 2025.",
   },
-  {    title: "Holamozilla 2025",
+  {
+    title: "Holamozilla 2025",
     image: "/assets/Holamozilla2025.png",
     url: "https://hola.sliitmozilla.org",
     urlLabel: "Visit Web",
@@ -190,7 +192,10 @@ export default function Events() {
           <h2 className="text-3xl font-bold text-center mb-12">Past Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {pastEvents.map((pastEvent) => (
-              <div key={pastEvent.title} className={`bg-white rounded-lg shadow-sm overflow-hidden ${pastEvent.title === "Bashaway 2025" ? "md:col-span-1" : ""}`}>
+              <div
+                key={pastEvent.title}
+                className={`bg-white rounded-lg shadow-sm overflow-hidden ${pastEvent.title === "Bashaway 2025" ? "md:col-span-1" : ""}`}
+              >
                 <img
                   src={pastEvent.image}
                   alt={pastEvent.title}
