@@ -1,0 +1,31 @@
+name: PR Check
+run-name: Check PR ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+  pull_request_target:
+    types: [opened, synchronize, edited, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate github app token
+        uses: wow-actions/use-app-token@v2
+        id: app-token
+        with:
+          app_id: ${{ vars.MOXY_APP_ID }}
+          private_key: ${{ secrets.MOXY_PRIVATE_KEY }}
+
+      - name: Check PR
+        uses: Mozilla-Campus-Club-of-SLIIT/pr-check-action@main
+        with:
+          token: ${{ steps.app-token.outputs.bot_token }}
+          comment-author: ${{ steps.app-token.outputs.bot_name}}[bot]
+          check-closing-statement: true
+          check-unchecked-boxes: true
+          require-nondefault-branch: true
