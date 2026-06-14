@@ -120,11 +120,11 @@ export default function About() {
                 </p>
                 <p className="text-gray-600 text-center leading-relaxed">
                   Under the current leadership of our{" "}
-                  <b>Club President - Sadeesha Perera and his wonderful team</b>, we continue to
-                  grow and adapt, always staying true to our core values of openness, innovation,
-                  and community building. Our members have gone on to make significant contributions
-                  to various open source projects and have established successful careers in the
-                  tech industry.
+                  <b>Club President - Seniru Pasan and his wonderful team</b>, we continue to grow
+                  and adapt, always staying true to our core values of openness, innovation, and
+                  community building. Our members have gone on to make significant contributions to
+                  various open source projects and have established successful careers in the tech
+                  industry.
                 </p>
               </div>
             </div>

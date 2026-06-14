@@ -10,6 +10,68 @@ export interface ExecutiveCommittee {
 }
 
 export const executiveCommittees: ExecutiveCommittee = {
+  "2026/2027": [
+    {
+      name: "Seniru Pasan",
+      role: "President",
+      image: "/assets/Seniru.jpg",
+      linkedin: "https://www.linkedin.com/in/senirupasan/",
+    },
+    {
+      name: "Bhanuka Bandara",
+      role: "Vice President",
+      image: "/assets/Bhanuka.png",
+      linkedin: "https://www.linkedin.com/in/mrbhanuka",
+    },
+    {
+      name: " Ranindu Wathsal",
+      role: "Secretary",
+      image: "/assets/RaninduWathsal.jpg",
+      linkedin: "https://www.linkedin.com/in/ranindu-h-44036a354",
+    },
+    {
+      name: "Janitha Gamage",
+      role: "Treasurer",
+      image: "/assets/JanithaSuranjana.jpg",
+      linkedin: "https://www.linkedin.com/in/janithagamage/",
+    },
+    {
+      name: "Heshan Thenura",
+      role: "Dev Lead",
+      image: "/assets/HeshanThenura.jpg",
+      linkedin: "https://www.linkedin.com/in/heshanthenura/",
+    },
+    {
+      name: "Gayathri Krishnaram",
+      role: "Design Lead",
+      image: "/assets/Gayathri.jpeg",
+      linkedin: "https://www.linkedin.com/in/gayakrishanaram",
+    },
+    {
+      name: "Sahnas Thufail",
+      role: "Event Coordinator",
+      image: "/assets/Sahnas.jpeg",
+      linkedin: "https://www.linkedin.com/in/sahnas-thufail",
+    },
+    {
+      name: "Virul Meemana",
+      role: "Project Coordinator",
+      image: "/assets/VirulMeemana.jpg",
+      linkedin: "https://www.linkedin.com/in/virul-meemana-4597292a0",
+    },
+    {
+      name: "Tharinda Marasingha",
+      role: "Assistant Secretary",
+      image: "/assets/Tharinda.jpeg",
+      linkedin: "https://www.linkedin.com/in/tharindanirmal/",
+    },
+    {
+      name: "Shazmina Oudeen",
+      role: "Assistant Treasurer",
+      image: "/assets/ShazminaOudeen.jpg",
+      linkedin: "https://www.linkedin.com/in/shazmina-oudeen",
+    },
+  ],
   "2025/2026": [
     {
       name: "Sadeesha Perera",

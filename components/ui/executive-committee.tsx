@@ -11,8 +11,11 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
   if (members.length === 0) return null
 
   const [president, ...otherMembers] = members
+  const isLargeCommittee = members.length === 10
+
   const secondRow = otherMembers.slice(0, 3)
-  const thirdRow = otherMembers.slice(3)
+  const thirdRow = isLargeCommittee ? otherMembers.slice(3, 6) : otherMembers.slice(3)
+  const fourthRow = isLargeCommittee ? otherMembers.slice(6, 9) : []
 
   return (
     <div className="flex flex-col gap-8">
@@ -43,7 +46,7 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
         </div>
       </div>
 
-      {/* Second row (vice president, secretary and treasurer) */}
+      {/* Second row (3 members) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {secondRow.map((member, index) => (
           <div
@@ -75,8 +78,14 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
         ))}
       </div>
 
-      {/* Third row (remaining members) */}
-      <div className="grid gap-8 justify-center grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+      {/* Third row (3 members) */}
+      <div
+        className={
+          isLargeCommittee
+            ? "grid grid-cols-1 md:grid-cols-3 gap-8"
+            : "grid gap-8 justify-center grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"
+        }
+      >
         {thirdRow.map((member, index) => (
           <div
             key={index}
@@ -106,6 +115,40 @@ const ExecutiveCommitteeUI: React.FC<ExecutiveCommitteeProps> = ({ members }) =>
           </div>
         ))}
       </div>
+
+      {/* Fourth row (3 members) - only for 10-member committees */}
+      {isLargeCommittee && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {fourthRow.map((member, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow text-center"
+            >
+              <div className="w-24 h-24 mx-auto mb-4 relative">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="rounded-full object-cover"
+                />
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="linkedin-overlay"
+                    aria-label={`View ${member.name}'s LinkedIn profile`}
+                  >
+                    <Linkedin className="linkedin-icon" />
+                  </a>
+                )}
+              </div>
+              <h3 className="font-bold text-lg">{member.name}</h3>
+              <p className="text-gray-600">{member.role}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
