@@ -41,31 +41,25 @@ const events: Partial<Event>[] = [
     time: "Every Week",
   },
   {
-    title: "Open Source Contribution Day",
+    title: "N1: Codenight",
     date: "TBD",
     description:
-      "Join us for a day of contributing to open source projects to celebrate the wonder and beauty of Open-Source Software on Open Source Contribution Day!",
+      "N1: Codenight is an upcoming event by the Mozilla Campus Club of SLIIT. More details will be announced soon.",
     location: "TBD",
     time: "TBD",
   },
-  {
-    title: "Hola Mozilla!",
-    date: "April 2025",
-    description:
-      "Hola Mozilla is the Orientation program for the Mozilla Campus Club of SLIIT. This event is specially focused on the new members of the club to get to know about the club and its activities.",
-    location: "TBD",
-    time: "TBD",
-  } /*{
-    title: "Tech Talk: Future of Web",
-    date: "July 15, 2025",
-    description: "Industry experts discuss the future of web technologies",
-    location: "SLIIT - Conference Hall",
-    time: "2:00 PM - 4:00 PM",
-  },*/,
 ]
 
 // past events data
 const pastEvents: Partial<Event>[] = [
+  {
+    title: "Deploy(it) v1.0.0",
+    description: "Deploy(it) v1.0.0 was hosted by the Mozilla Campus Club of SLIIT.",
+  },
+  {
+    title: "Introduction to Desktop Linux",
+    description: "Introduction to Desktop Linux was hosted by the Mozilla Campus Club of SLIIT.",
+  },
   {
     title: "Bashaway 2025",
     image: "/assets/bashaway2025.jpg",
@@ -80,7 +74,7 @@ const pastEvents: Partial<Event>[] = [
     url: "https://hola.sliitmozilla.org",
     urlLabel: "Visit Web",
     description:
-      "The event, organized in collaboration with Cloud Native Sri Lanka, highlighted Mozilla’s legacy and vision in open technology. The program also featured an informative DevSecOps 101 session, an engaging interactive quiz with exciting giveaways, and a preview of Mozilla's upcoming initiatives, providing valuable insights into the evolving landscape of open-source innovation and community-driven development.",
+      "The event, organized in collaboration with Cloud Native Sri Lanka, highlighted Mozillaâ€™s legacy and vision in open technology. The program also featured an informative DevSecOps 101 session, an engaging interactive quiz with exciting giveaways, and a preview of Mozilla's upcoming initiatives, providing valuable insights into the evolving landscape of open-source innovation and community-driven development.",
   },
   {
     title: "Bashaway 2024",
@@ -196,11 +190,13 @@ export default function Events() {
                 key={pastEvent.title}
                 className={`bg-white rounded-lg shadow-sm overflow-hidden ${pastEvent.title === "Bashaway 2025" ? "md:col-span-1" : ""}`}
               >
-                <img
-                  src={pastEvent.image}
-                  alt={pastEvent.title}
-                  className={`w-full h-48 object-cover ${pastEvent.title === "Bashaway 2025" ? "h-56" : ""}`}
-                />
+                {pastEvent.image && (
+                  <img
+                    src={pastEvent.image}
+                    alt={pastEvent.title}
+                    className={`w-full h-48 object-cover ${pastEvent.title === "Bashaway 2025" ? "h-56" : ""}`}
+                  />
+                )}
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-orange-600">{pastEvent.title}</h3>
                   <p className="text-gray-600">{pastEvent.description}</p>
